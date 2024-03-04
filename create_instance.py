@@ -1,3 +1,5 @@
+from thaiticket import WebController, Account, Hall, HallSeat
+
 def create_instance():
     Hall_1 = Hall('JJ HALL ชั้น 6 ศูนย์การค้าเจเจมอลล์')
     Hall_2 = Hall('Exhibition Hall 3-4, ศูนย์ประชุมแห่งชาติสิริกิติ์')

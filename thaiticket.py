@@ -264,7 +264,7 @@ class Ticket:
 def create_instance():
     Hall_1 = Hall('JJ HALL ชั้น 6 ศูนย์การค้าเจเจมอลล์')
     Hall_2 = Hall('Exhibition Hall 3-4, ศูนย์ประชุมแห่งชาติสิริกิติ์')
-    Hall_3 = Hall('kk')
+    Hall_3 = Hall('oo')
 
     listrow = 'ABC'
     listcol = [1,20]

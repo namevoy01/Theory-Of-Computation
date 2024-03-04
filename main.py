@@ -2,6 +2,10 @@ from typing import Union
 
 from fastapi import FastAPI
 
+from create_instance import create_instance
+
+controller = create_instance()
+
 app = FastAPI()
 
 
@@ -12,4 +16,5 @@ def read_root():
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": {item_id : 'ว่าไงจ๊ะ'}}
+    item = controller.search(item_id)
+    return {"item_id": item}

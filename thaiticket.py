@@ -163,9 +163,9 @@ class Show:
     def show_time(self):
         return self.__show_time
     
-    @property
-    def show_date(self):
-        return self.__show_date
+    # @property
+    # def show_date(self):
+    #     return self.__show_date
     
     @property
     def event(self):

@@ -164,6 +164,10 @@ class Show:
         return self.__show_time
     
     @property
+    def show_date(self):
+        return self.__show_date
+    
+    @property
     def event(self):
         return self.__event
 
@@ -273,4 +277,3 @@ def create_instance():
         print(seat.seat_no)
 create_instance()
 
-Helloworld

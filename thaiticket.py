@@ -267,7 +267,7 @@ def create_instance():
     Hall_3 = Hall('oo')
     Hall_4 = Hall('ABCDEFG')
     listrow = 'ABC'
-    listcol = [1,20]
+    listcol = [1,10]
 
     for row in listrow:
         for col in range(listcol[0], listcol[1]+1):

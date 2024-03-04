@@ -1,2 +1,2 @@
 def create_instance():
-    pass
+    Hall_1 = Hall('HI')

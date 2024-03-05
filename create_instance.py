@@ -187,24 +187,6 @@ Tom Jones ศิลปินรุ่นใหญ่ชาวบริทิช 
         for col in range(Hall_3_col[0],Hall_3_col[1]+1):
             Hall_3.add_hall_seat(HallSeat(row+'-'+str(col)))
 
-    # G1_A2_row = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','W','X','Y','Z']
-    # G1_A2_col = [25,48]
-    # for row in G1_A2_row:
-    #     for col in range(G1_A2_col[0],G1_A2_col[1]+1):
-    #         Hall_3.add_hall_seat(HallSeat(row+'-'+str(col)))
-
-    # G2_A3_row = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','W','X','Y','Z']
-    # G2_A3_col = [49,72]
-    # for row in G2_A3_row:
-    #     for col in range(G2_A3_col[0],G2_A3_col[1]+1):
-    #         Hall_3.add_hall_seat(HallSeat(row+'-'+str(col)))
-
-    # A4_B2_row = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','W','X','Y','Z']
-    # A4_B2_col = [73,96]
-    # for row in A4_B2_row:
-    #     for col in range(A4_B2_col[0],A4_B2_col[1]+1):
-    #         Hall_3.add_hall_seat(HallSeat(row+'-'+str(col)))
-
     Event_4 = Event('est Cola Presents JEFF SATUR: SPACE SHUTTLE NO.8 ASIA TOUR IN BANGKOK','20-04-2567-21-04-2567',Hall_3,'3-02-2567-12:00-AM-5-02-2567-10:00-AM','ON SALE NOW',
 '''Live Nation Members Pre-sale:
  

@@ -39,29 +39,27 @@ class WebController:
 
         return data
     
+    def select_show(self, event_name, show_date, show_time):
+        event = self.search_event(event_name)
+        data = {}
+        data['zone_available_seat'] = []
+        zone_list = event.zone_list
+        show = event.search_show(show_date, show_time)
+        for zone in zone_list:
+            zone_name = zone.name
+            available_seat = zone.get_available_seat(show)
+            data['zone_available_seat'].append({'zone_name' : zone_name, 'available_seat' : available_seat})
+
+        return data
+    
+    def select_zone(self):
+        pass
+    
     def search_event(self, event_name):
         for event in self.__event_list:
             if event.name == event_name:
                 return event
-        return 'Error'
-
-    def select_show(self, account, show):
-        pass
-
-    def select_zone(self, account, zone):
-        pass
-    
-    def select_seat(self, account, seat_list):
-        pass
-    
-    def select_receive_method(self, account, method):
-        pass
-
-    def make_reservation(self, account):
-        pass
-
-    def get_zone_show_seat(self, hall_name, zone):
-        pass
+        return 'Not Found'
     
     def search_account(self, account_name):
         for account in self.__account_list:
@@ -166,6 +164,12 @@ class Event:
     def add_zone(self, zone):
         self.__zone_list.append(zone)
 
+    def search_show(self, show_date, show_time):
+        for show in self.__show_list:
+            if show.show_date == show_date and show.show_time == show_time:
+                return show
+        return 'Not Found'
+
 class Show:
     def __init__(self, event, show_date, show_time):
         self.__event = event
@@ -188,8 +192,8 @@ class Zone:
     def __init__(self, zone_name, price, row, col):
         self.__zone_name = zone_name
         self.__price = price
-        self.__row = row  #[A,F]
-        self.__col = col #[1,10]
+        self.__row = row 
+        self.__col = col 
         self.__show_seat_list = []
 
     def add_show_seat(self, show_seat):
@@ -210,6 +214,17 @@ class Zone:
     @property
     def price(self):
         return self.__price
+    
+    def get_available_seat(self, show):
+        first_seat = self.col[0]
+        last_seat = self.col[1]
+        number_col = (last_seat - first_seat) + 1
+        number_row = len(self.row)
+        available_seat_amount =  number_row * number_col
+        for show_seat in self.__show_seat_list:
+            if show == show_seat.show:
+                available_seat_amount -= 1
+        return available_seat_amount
     
 class Hall:
     def __init__(self, hall_name):

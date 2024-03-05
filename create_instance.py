@@ -1,4 +1,4 @@
-from thaiticket import WebController, Account, Hall, HallSeat, Zone, Event, Show
+from thaiticket import WebController, Account, Hall, HallSeat, Zone, Event, Show, ShowSeat
 
 def create_instance():
 
@@ -180,7 +180,7 @@ Tom Jones ศิลปินรุ่นใหญ่ชาวบริทิช 
         Event_3.add_zone(zone)
 
     Event_3.add_show(Event_3_Show_1)
-
+    
     Hall_3_row = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','W','X','Y','Z']
     Hall_3_col = [1,100]
     for row in Hall_3_row:
@@ -285,13 +285,10 @@ UOB Presale
     for show in Event_4_show_list:
         Event_4.add_show(show)
 
-
-
-
-
-    Event_list = [Event_1,Event_2,Event_3]
+    Event_list = [Event_1,Event_2,Event_3, Event_4]
     for event in Event_list:
         thaiticket.add_event(event)
 
     return thaiticket
-create_instance()
+
+

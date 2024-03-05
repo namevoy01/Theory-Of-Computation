@@ -2,9 +2,9 @@ from typing import Union
 
 from fastapi import FastAPI
 
-from create_instance import create_instances
+from create_instance import create_instance
 
-controller = create_instances()
+controller = create_instance()
 
 app = FastAPI()
 

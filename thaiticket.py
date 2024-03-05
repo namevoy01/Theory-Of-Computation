@@ -14,11 +14,10 @@ class WebController:
 
     def add_account(self, account):
         self.__account_list.append(account)
-
-    def search_event(self, event_name):
-        for event in self.__event_list:
-            if event.name == event_name:
-                return event
+    
+    @property
+    def event_list(self):
+        return self.__event_list
 
     def select_event(self, event_name):
         event = self.search_event(event_name)
@@ -27,11 +26,24 @@ class WebController:
         data['event_date'] = event.date
         data['event_introduction'] = event.intro
         data['event_ticket_sale_date'] = event.ticket_sale_date
-        data['event_ticket_sale_time'] = event.ticket_sale_time
         hall = event.hall
         data['hall_name'] = hall.name
         show_list = event.show_list
-        data['show_list'] = show_list
+        data['show_list'] = []
+        for show in show_list:
+            data['show_list'].append({'show_date' : show.show_date, 'show_time' : show.show_time})
+        zone_list = event.zone_list
+        data['zone_price'] = set()
+        for zone in zone_list:
+            data['zone_price'].add(zone.price)
+
+        return data
+    
+    def search_event(self, event_name):
+        for event in self.__event_list:
+            if event.name == event_name:
+                return event
+        return 'Error'
 
     def select_show(self, account, show):
         pass
@@ -50,12 +62,6 @@ class WebController:
 
     def get_zone_show_seat(self, hall_name, zone):
         pass
-
-    def search_event(self, event):
-        for ev in self.__event_list:
-            if ev == event:
-                return event
-        return 'Not Found'
     
     def search_account(self, account_name):
         for account in self.__account_list:
@@ -190,7 +196,7 @@ class Zone:
         self.__show_seat_list.append(show_seat)
 
     @property
-    def zone_name(self):
+    def name(self):
         return self.__zone_name
 
     @property
@@ -271,3 +277,4 @@ class Ticket:
     @property
     def ticket_no(self):
         return self.__ticket_no
+    

@@ -127,15 +127,10 @@ TikTok : SimpleP.Entertainment
 
     Event_2.add_show(Event_2_Show_1)
 
-    A_row = ['A','B','C','D','E','F']
-    A_col = [1,26]
-    for row in A_row:
-        for col in range(A_col[0],A_col[1]+1):
-            Hall_2.add_hall_seat(HallSeat(row+'-'+str(col)))
-    B_row = ['G','H','I','J','K','L','M','N']
-    B_col = [1,26]
-    for row in B_row:
-        for col in range(B_col[0],B_col[1]+1):
+    Hall_2_row = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N']
+    Hall_2_col = [1,26]
+    for row in Hall_2_row:
+        for col in range(Hall_2_col[0],Hall_2_col[1]+1):
             Hall_2.add_hall_seat(HallSeat(row+'-'+str(col)))
 
     Hall_3 = Hall('ยูโอบี ไลฟ์')
@@ -185,7 +180,7 @@ Tom Jones ศิลปินรุ่นใหญ่ชาวบริทิช 
         Event_3.add_zone(zone)
 
     Event_3.add_show(Event_3_Show_1)
-    
+
     Hall_3_row = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','W','X','Y','Z']
     Hall_3_col = [1,100]
     for row in Hall_3_row:

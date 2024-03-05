@@ -22,18 +22,16 @@ class WebController:
 
     def select_event(self, event_name):
         event = self.search_event(event_name)
-        data = []
-        data.append(event_name)
-        data.append(event.date)
-        data.append(event.intro)
-        data.append(event.ticket_sale_date)
-        data.append(event.ticket_sale_status)
-        hall_name = event.hall.name
-        data.append(hall_name)
+        data = {}
+        data['event_name'] = event.name
+        data['event_date'] = event.date
+        data['event_introduction'] = event.intro
+        data['event_ticket_sale_date'] = event.ticket_sale_date
+        data['event_ticket_sale_time'] = event.ticket_sale_time
+        hall = event.hall
+        data['hall_name'] = hall.name
         show_list = event.show_list
-        for show in show_list:
-            pass
-
+        data['show_list'] = show_list
 
     def select_show(self, account, show):
         pass

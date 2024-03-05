@@ -30,6 +30,9 @@ class WebController:
         data.append(event.ticket_sale_status)
         hall_name = event.hall.name
         data.append(hall_name)
+        show_list = event.show_list
+        for show in show_list:
+            pass
 
 
     def select_show(self, account, show):
@@ -191,10 +194,14 @@ class Zone:
     @property
     def zone_name(self):
         return self.__zone_name
+
+    @property
+    def row(self):
+        return self.__row
     
     @property
-    def row_col(self):
-        return self.__row_col
+    def col(self):
+        return self.__col
     
     @property
     def price(self):

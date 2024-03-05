@@ -15,60 +15,40 @@ class WebController:
     def add_account(self, account):
         self.__account_list.append(account)
 
-    def select_event(self, account, event):
-        account.set_event(event)
-        event_name = event.name
-        show_instance_list = event.show_list
-        show_details_list = []
-        for show_instance in show_instance_list:
-            show_details = [show_instance.show_time, show_instance.hall_name]
-            show_details_list.append(show_details)
-        return event_name, show_details_list
+    def search_event(self, event_name):
+        for event in self.__event_list:
+            if event.name == event_name:
+                return event
+
+    def select_event(self, event_name):
+        event = self.search_event(event_name)
+        data = []
+        data.append(event_name)
+        data.append(event.date)
+        data.append(event.intro)
+        data.append(event.ticket_sale_date)
+        data.append(event.ticket_sale_status)
+        hall_name = event.hall.name
+        data.append(hall_name)
+
 
     def select_show(self, account, show):
-        account.set_show(show)
-        zone_instance_list = show.event.zone_list
-        zone_details_list = []
-        for zone_instance in zone_instance_list:
-            zone_details = [zone_instance.zone_name, zone_instance.row_col, zone_instance.price]
-            zone_details_list.append(zone_details)
-        return zone_details_list
+        pass
 
     def select_zone(self, account, zone):
-        account.set_zone(zone)
-        show = account.selected_show
-        hall_name = show.hall_name
-        return self.get_all_show_seat(hall_name, zone)
+        pass
     
     def select_seat(self, account, seat_list):
-        account.extend(seat_list)
-        return 'Please select receive method'
+        pass
     
     def select_receive_method(self, account, method):
-        account.set_receive_method(method)
-        self.make_reservation(account)
+        pass
 
     def make_reservation(self, account):
         pass
 
     def get_zone_show_seat(self, hall_name, zone):
-        show_seat_dict = {}
-        for r, c in zone.row_col.items():
-            zone_row = r
-            zone_col = c
-            for hall_seat_instance in self.__hall_seat_list:
-                if hall_seat_instance.hall_name == hall_name:
-                    seat_no = hall_seat_instance.seat_no
-                    seat_no_split = seat_no.split('-') # [seat_row, seat_col]
-                    if seat_no_split[0] == zone_row and (zone_col[0] <= int(seat_no_split[1]) <= zone_col[1]):
-                        show_seat_dict[seat_no] = hall_seat_instance.is_reserved
-            for showseat_instance in self.__showseat_list:
-                if showseat_instance.hall_name == hall_name:
-                    seat_no = showseat_instance.seat_no
-                    seat_no_split = seat_no.split('-') # [seat_row, seat_col]
-                    if seat_no_split[0] == zone_row and (zone_col[0] <= int(seat_no_split[1]) <= zone_col[1]):
-                        show_seat_dict[seat_no] = showseat_instance.is_reserved
-        return show_seat_dict
+        pass
 
     def search_event(self, event):
         for ev in self.__event_list:
@@ -144,6 +124,26 @@ class Event:
     @property
     def name(self):
         return self.__event_name
+    
+    @property
+    def date(self):
+        return self.__event_date
+    
+    @property
+    def ticket_sale_date(self):
+        return self.__ticket_sale_date
+    
+    @property
+    def ticket_sale_status(self):
+        return self.__ticket_sale_status
+    
+    @property
+    def intro(self):
+        return self.__intro
+    
+    @property
+    def hall(self):
+        return self.__event_hall
 
     @property
     def show_list(self):
@@ -152,6 +152,12 @@ class Event:
     @property
     def zone_list(self):
         return self.__zone_list
+    
+    def add_show(self, show):
+        self.__show_list.append(show)
+
+    def add_zone(self, zone):
+        self.__zone_list.append(zone)
 
 class Show:
     def __init__(self, event, show_date, show_time):
@@ -203,11 +209,11 @@ class Hall:
         self.__hall_seat_list.append(hall_seat)
 
     @property
-    def hall_name(self):
+    def name(self):
         return self.__hall_name
     
     @property
-    def hall_seat_list(self):
+    def seat_list(self):
         return self.__hall_seat_list
     
 class HallSeat:

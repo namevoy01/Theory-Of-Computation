@@ -13,6 +13,10 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
+@app.post("/select-event")
+def select_event(event_name : str):
+    data = controller.select_event(event_name)
+    return data
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):

@@ -1,6 +1,9 @@
 from thaiticket import WebController, Account, Hall, HallSeat, Zone, Event, Show
 
 def create_instance():
+
+    thaiticket = WebController()
+
     Hall_1 = Hall('JJ HALL ชั้น 6 ศูนย์การค้าเจเจมอลล์')
     Event_1 = Event('2024 NA IN WOO Fan Meeting in Bangkok Touch my heart','23-03-2567',Hall_1,'2-03-2567-10:00-AM','ON SALE NOW',
 '''ช่องทางการจำหน่ายบัตรและชำระเงิน
@@ -179,5 +182,7 @@ Tom Jones ศิลปินรุ่นใหญ่ชาวบริทิช 
 
     Event_list = [Event_1,Event_2,Event_3]
     for event in Event_list:
-        WebController.add_event(event)
+        thaiticket.add_event(event)
+
+    return thaiticket
 create_instance()

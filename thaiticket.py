@@ -52,18 +52,64 @@ class WebController:
 
         return data
     
-    def select_zone(self):
-        pass
+    def select_zone(self, account_id, event_name, show_date, show_time, zone_name):
+        event = self.search_event(event_name)
+        show = event.search_show(show_date, show_time)
+        zone = event.search_zone(zone_name)
+        zone_row_list = zone.row
+        zone_col_range = zone.col
+        zone_show_seat_list = zone.show_seat_list
+        hall = event.hall
+        hall_seat_list = hall.seat_list
+        hall_all_seat_no = [hall_seat.seat_no for hall_seat in hall_seat_list]
+
+        data = {}
+        data['zone_seat'] = WebController.check_available_seat_in_zone_of_show(zone_show_seat_list, \
+                                                                               hall_all_seat_no, show, \
+                                                                                zone_row_list, \
+                                                                                zone_col_range)
+        account = self.search_account(account_id)
+        address = account.address
+        special = account.is_special
+        data['account_address'] = address
+        data['is_special'] = special
+
+        return data
     
+    def check_available_seat_in_zone_of_show(show_seat_list, hall_seat_no_list, show, zone_row_list, zone_col_range):
+        data = []
+        show_seat_no_list = []
+        for show_seat in show_seat_list:
+            if show_seat.show == show:
+                show_seat_no_list.append(show_seat.seat_no)
+
+        for hall_seat_no in hall_seat_no_list:
+            seat_no_splited = hall_seat_no.split('-')
+            hall_seat_row = seat_no_splited[0]
+            hall_seat_col = seat_no_splited[1]
+            if hall_seat_row in zone_row_list and zone_col_range[0] <= hall_seat_col <= zone_col_range[1]:
+                if hall_seat_no not in show_seat_no_list:
+                    data.append({'seat_no' : hall_seat_no, 'status' : 'available'})
+                else:
+                    data.append({'seat_no' : hall_seat_no, 'status' : 'not available'})
+
+        return data
+
     def search_event(self, event_name):
         for event in self.__event_list:
             if event.name == event_name:
                 return event
         return 'Not Found'
     
-    def search_account(self, account_name):
+    def search_account_by_name(self, account_name):
         for account in self.__account_list:
             if account.name == account_name:
+                return account
+            return 'Not Found'
+        
+    def search_account_by_id(self, account_id):
+        for account in self.__account_list:
+            if account.id == account_id:
                 return account
             return 'Not Found'
     
@@ -80,40 +126,28 @@ class Account:
         self.__reservation_list = []
         self.__ticket_list = []
     
-    def register_special_member(self):
-        if self.is_special == False:
-            self.__special = True
-            return "Success"
-        else:
-            return "This account is special member!!"
+    # def register_special_member(self):
+    #     if self.is_special == False:
+    #         self.__special = True
+    #         return "Success"
+    #     else:
+    #         return "This account is special member!!"
     
     @property
     def name(self):
         return self.__name
     
     @property
-    def is_special(self):
-        return self.__special
-
-    @property
-    def selected_event(self):
-        return self.__selected_event
-
-    @property
-    def selected_show(self):
-        return self.__selected_show
-
-    @property
-    def selected_zone(self):
-        return self.__selected_zone
-
-    @property
-    def selected_seat(self):
-        return self.__selected_seat
+    def id(self):
+        return self.__citizen_id
     
     @property
-    def selected_receive_method(self):
-        return self.__selected_receive_method
+    def is_special(self):
+        return self.__special
+    
+    @property
+    def address(self):
+        return self.__address
 
 class Event:
     def __init__(self, event_name, event_date, event_hall, ticket_sale_date, ticket_sale_status, intro):
@@ -169,6 +203,12 @@ class Event:
             if show.show_date == show_date and show.show_time == show_time:
                 return show
         return 'Not Found'
+    
+    def search_zone(self, zone_name):
+        for zone in self.__zone_list:
+            if zone.name == zone_name:
+                return zone
+        return 'Not Found'
 
 class Show:
     def __init__(self, event, show_date, show_time):
@@ -198,6 +238,10 @@ class Zone:
 
     def add_show_seat(self, show_seat):
         self.__show_seat_list.append(show_seat)
+
+    @property
+    def show_seat_list(self):
+        return self.__show_seat_list
 
     @property
     def name(self):

@@ -1,4 +1,6 @@
 class WebController:
+    reservation_no = 1
+
     def __init__(self):
         self.__event_list = []
         self.__show_seat_list = []
@@ -14,6 +16,9 @@ class WebController:
 
     def add_account(self, account):
         self.__account_list.append(account)
+
+    def add_reservation(self, reservation):
+        self.__reservation_list.append(reservation)
     
     @property
     def event_list(self):
@@ -75,6 +80,23 @@ class WebController:
         data['is_special'] = special
 
         return data
+    
+    def select_seat(self, account_id, event_name, show_date, show_time, zone_name, seat_selected):
+        account = self.search_account_by_id(account_id)
+        event = self.search_event(event_name)
+        show = event.search_show(show_date, show_time)
+        zone = event.search_zone(zone_name)
+        for seat_no in seat_selected:
+            zone.create_show_seat(seat_no, show, zone)
+        reservation = self.create_reservation(account, event_name, show_date, show_time, seat_selected)
+        account.add_reservation(reservation)
+
+    def create_reservation(self, account, event_name, show_date, show_time, seat_list):
+        reservation = Reservation(account, self.reservation_no, event_name, show_date, show_time, seat_list)
+        self.add_reservation(reservation)
+        self.reservation_no += 1
+        
+        return reservation
     
     def check_available_seat_in_zone_of_show(show_seat_list, hall_seat_no_list, show, zone_row_list, zone_col_range):
         data = []
@@ -148,6 +170,9 @@ class Account:
     @property
     def address(self):
         return self.__address
+    
+    def add_reservation(self, reservation):
+        self.__reservation_list.append(reservation)
 
 class Event:
     def __init__(self, event_name, event_date, event_hall, ticket_sale_date, ticket_sale_status, intro):
@@ -270,6 +295,10 @@ class Zone:
                 available_seat_amount -= 1
         return available_seat_amount
     
+    def create_show_seat(self, seat_no, show, zone):
+        show_seat = ShowSeat(seat_no, show, zone)
+        self.add_show_seat(show_seat)
+    
 class Hall:
     def __init__(self, hall_name):
         self.__hall_name = hall_name
@@ -320,13 +349,14 @@ class Payment:
         self.__create_on = create_on
         
 class Reservation:
-    def __init__(self, account, reservation_no, event_name, show_date, status = 'Not pay yet'):
+    def __init__(self, account, reservation_no, event_name, show_date, show_time, show_seat_list, status = 'Not pay yet'):
         self.__account = account
         self.__reservation_no = reservation_no
         self.__event_name = event_name
         self.__show_date = show_date
+        self.__show_time = show_time
         self.__status = status
-        self.__show_seat_list = []
+        self.__show_seat_list = show_seat_list
 
 class Ticket:
     def __init__(self, ticket_no, show_seat):

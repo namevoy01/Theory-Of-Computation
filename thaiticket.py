@@ -1,5 +1,6 @@
 class WebController:
     reservation_no = 1
+    ticket_no = 1
 
     def __init__(self):
         self.__event_list = []
@@ -73,7 +74,7 @@ class WebController:
                                                                                hall_all_seat_no, show, \
                                                                                 zone_row_list, \
                                                                                 zone_col_range)
-        account = self.search_account(account_id)
+        account = self.search_account_by_id(account_id)
         address = account.address
         special = account.is_special
         data['account_address'] = address
@@ -98,6 +99,13 @@ class WebController:
         
         return reservation
     
+    def create_ticket(self, show_seat, account):
+        ticket = Ticket(self.ticket_no, show_seat)
+        account.add_ticket(ticket)
+        self.ticket_no += 1
+        
+        return ticket
+    
     def check_available_seat_in_zone_of_show(show_seat_list, hall_seat_no_list, show, zone_row_list, zone_col_range):
         data = []
         show_seat_no_list = []
@@ -109,12 +117,41 @@ class WebController:
             seat_no_splited = hall_seat_no.split('-')
             hall_seat_row = seat_no_splited[0]
             hall_seat_col = seat_no_splited[1]
-            if hall_seat_row in zone_row_list and zone_col_range[0] <= hall_seat_col <= zone_col_range[1]:
+            if hall_seat_row in zone_row_list and zone_col_range[0] <= int(hall_seat_col) <= zone_col_range[1]:
                 if hall_seat_no not in show_seat_no_list:
                     data.append({'seat_no' : hall_seat_no, 'status' : 'available'})
                 else:
                     data.append({'seat_no' : hall_seat_no, 'status' : 'not available'})
 
+        return data
+
+    def view_reservation(self, account_name):
+            account = self.search_account_by_name(account_name)
+            reservation_list = account.reservation_list
+            data ={}
+            for info in reservation_list:
+                data['account_name'] = info.account.name
+                data['reservation_no'] = info.reservation_no
+                data['event_name'] = info.event_name
+                data['show_date'] = info.show_date
+                data['show_time'] = info.show_time
+                data['status'] = info.status
+                data['show_seat_list'] = info.show_seat_list
+            
+            return data
+
+    def view_ticket(self, account_name):
+        account = self.search_account_by_name(account_name)
+        ticket_list = account.ticket_list
+        data ={}
+        for info in ticket_list:
+            data['ticket_no'] = info.ticket_no
+            data['event_name'] = info.show_seat.show.event.name
+            data['show_date'] = info.show_seat.show.show_date
+            data['show_time'] = info.show_seat.show.show_time
+            data['seat_no'] = info.show_seat.seat_no
+            data['hall_name'] = info.show_seat.show.event.hall.name
+            data['zone_name'] = info.show_seat.zone.name
         return data
 
     def search_event(self, event_name):
@@ -127,13 +164,13 @@ class WebController:
         for account in self.__account_list:
             if account.name == account_name:
                 return account
-            return 'Not Found'
+        return 'Not Found'
         
     def search_account_by_id(self, account_id):
         for account in self.__account_list:
             if account.id == account_id:
                 return account
-            return 'Not Found'
+        return 'Not Found'
     
 class Account:
     def __init__(self, name, surname, username, password, citizen_id, phone_no, address, special=False):
@@ -170,6 +207,17 @@ class Account:
     @property
     def address(self):
         return self.__address
+    
+    @property
+    def reservation_list(self):
+        return self.__reservation_list
+    
+    @property
+    def ticket_list(self):
+        return self.__ticket_list
+    
+    def add_ticket(self, ticket):
+        self.__ticket_list.append(ticket)
     
     def add_reservation(self, reservation):
         self.__reservation_list.append(reservation)
@@ -357,6 +405,35 @@ class Reservation:
         self.__show_time = show_time
         self.__status = status
         self.__show_seat_list = show_seat_list
+    
+    @property
+    def account(self):
+        return self.__account
+    
+    @property
+    def reservation_no(self):
+        return self.__reservation_no
+    
+    @property
+    def event_name(self):
+        return self.__event_name
+    
+    @property
+    def show_date(self):
+        return self.__show_date
+    
+    @property
+    def show_time(self):
+        return self.__show_time
+    
+    @property
+    def status(self):
+        return self.__status
+    
+    @property
+    def show_seat_list(self):
+        return self.__show_seat_list
+    
 
 class Ticket:
     def __init__(self, ticket_no, show_seat):
@@ -366,4 +443,10 @@ class Ticket:
     @property
     def ticket_no(self):
         return self.__ticket_no
+    
+    @property
+    def show_seat(self):
+        return self.__showseat
+    
+
     

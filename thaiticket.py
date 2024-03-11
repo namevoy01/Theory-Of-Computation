@@ -20,6 +20,10 @@ class WebController:
 
     def add_reservation(self, reservation):
         self.__reservation_list.append(reservation)
+
+    @property
+    def reservation_list(self):
+        return self.__reservation_list
     
     @property
     def event_list(self):
@@ -87,8 +91,10 @@ class WebController:
         event = self.search_event(event_name)
         show = event.search_show(show_date, show_time)
         zone = event.search_zone(zone_name)
-        for seat_no in seat_selected:
-            zone.create_show_seat(seat_no, show, zone)
+        seat_selected_splited = seat_selected.split(',')
+        for seat_no in seat_selected_splited:
+            if zone.create_show_seat(seat_no, show, zone) == 'Error':
+                raise ValueError
         reservation = self.create_reservation(account, event_name, show_date, show_time, seat_selected)
         account.add_reservation(reservation)
 
@@ -344,8 +350,13 @@ class Zone:
         return available_seat_amount
     
     def create_show_seat(self, seat_no, show, zone):
-        show_seat = ShowSeat(seat_no, show, zone)
-        self.add_show_seat(show_seat)
+        seat_no_splited = seat_no.split('-')
+        if seat_no_splited[0] in self.__row and self.__col[0] <= int(seat_no_splited[1]) <= self.__col[1]:
+            show_seat = ShowSeat(seat_no, show, zone)
+            self.add_show_seat(show_seat)
+            return 'Success'
+        else:
+            return 'Error'
     
 class Hall:
     def __init__(self, hall_name):

@@ -31,11 +31,11 @@ def select_show(event_name : str, show_date:str, show_time:str):
 
 @app.get("/select-zone")
 def select_zone(account_id:str, event_name:str, show_date:str, show_time:str, zone_name:str):
-    data = controller.select_zone(account_id, event_name, show_date, show_time)
+    data = controller.select_zone(account_id, event_name, show_date, show_time, zone_name)
     return data
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    item = controller.search(item_id)
-    return {"item_id": item}
+@app.get("/select-seat")
+def select_seat(account_id:str, event_name:str, show_date:str, show_time:str, zone_name:str, seat_selected:str):
+    controller.select_seat(account_id, event_name, show_date, show_time, zone_name, seat_selected)
+    return {'status' : 'success'}
 

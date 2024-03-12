@@ -31,6 +31,13 @@ class WebController:
     def event_list(self):
         return self.__event_list
 
+    def login(self, username, password):
+        account = self.search_account_by_username(username)
+        if password == str(account.password):
+            return "Success"
+        else:
+            return "Error"
+
     def select_event(self, event_name):
         event = self.search_event(event_name)
         data = {}
@@ -210,6 +217,12 @@ class WebController:
                 return account
         return 'Not Found'
     
+    def search_account_by_username(self, username):
+        for account in self.__account_list:
+            if username == account.username:
+                return account
+        return 'Not Found'
+
 class Account:
     def __init__(self, name, surname, username, password, citizen_id, phone_no, address, special=False):
         self.__name = name
@@ -226,6 +239,14 @@ class Account:
     @property
     def name(self):
         return self.__name
+    
+    @property
+    def username(self):
+        return self.__username
+    
+    @property
+    def password(self):
+        return self.__password
     
     @property
     def id(self):

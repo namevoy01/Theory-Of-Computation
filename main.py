@@ -19,6 +19,11 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
+@app.get("/login")
+def login(username:str, password:str):
+    data = controller.login(username, password)
+    return data
+
 @app.get("/select-event")
 def select_event(event_name : str):
     data = controller.select_event(event_name)

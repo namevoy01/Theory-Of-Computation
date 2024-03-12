@@ -167,8 +167,10 @@ class WebController:
     def view_reservation(self, account_name):
             account = self.search_account_by_name(account_name)
             reservation_list = account.reservation_list
-            data ={}
+            data_list = []
+            
             for info in reservation_list:
+                data ={}
                 data['account_name'] = info.account.name
                 data['reservation_no'] = info.reservation_no
                 data['event_name'] = info.event_name
@@ -176,14 +178,16 @@ class WebController:
                 data['show_time'] = info.show_time
                 data['status'] = info.status
                 data['show_seat_list'] = info.show_seat_list
-            
-            return data
+                data_list.append(data)            
+            return data_list
 
     def view_ticket(self, account_name):
         account = self.search_account_by_name(account_name)
         ticket_list = account.ticket_list
-        data ={}
+        data_list = []
+
         for info in ticket_list:
+            data ={}
             data['ticket_no'] = info.ticket_no
             data['event_name'] = info.show_seat.show.event.name
             data['show_date'] = info.show_seat.show.show_date
@@ -191,7 +195,8 @@ class WebController:
             data['seat_no'] = info.show_seat.seat_no
             data['hall_name'] = info.show_seat.show.event.hall.name
             data['zone_name'] = info.show_seat.zone.name
-        return data
+            data_list.append(data)
+        return data_list
 
     def search_event(self, event_name):
         for event in self.__event_list:

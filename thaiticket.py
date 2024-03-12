@@ -101,30 +101,49 @@ class WebController:
         show = event.search_show(show_date, show_time)
         zone = event.search_zone(zone_name)
         seat_selected_splited = seat_selected.split(',')
+        show_seat_list = []
         for seat_no in seat_selected_splited:
-            if zone.create_show_seat(seat_no, show, zone) == 'Error':
-                raise ValueError
-        reservation = self.create_reservation(account, event_name, show_date, show_time, seat_selected)
+            show_seat = zone.create_show_seat(seat_no, show, zone)
+            show_seat_list.append(show_seat)
+        reservation = self.create_reservation(account, event_name, show_date, show_time, show_seat_list)
         account.add_reservation(reservation)
 
         return {'resv_no' : reservation.reservation_no}
     
     def confirm_payment(self, reservation_no, total_pice, receive_method):
         reservation = self.search_reservation(reservation_no)
-        payment = self.create_payment(reservation, total_pice, receive_method)
-        reservation.set_status_success()
-        show_seat_list = reservation.show_seat_list
-        account = reservation.account
-        for show_seat in show_seat_list:
-            self.create_ticket(show_seat, account)
+        if reservation.status != 'paid':
+            payment = self.create_payment(reservation, total_pice, receive_method)
+            reservation.set_status_success()
+            show_seat_list = reservation.show_seat_list
+            account = reservation.account
+            for show_seat in show_seat_list:
+                self.create_ticket(show_seat, account)
 
-        data = {}
-        data['resv_no'] = reservation_no
-        data['payment'] = []
-        data['payment'].append({'total_price' : payment.total_price})
-        data['payment'].append({'recv_method' : payment.receive_method})
-        data['payment'].append({'create_on' : payment.create_on})
-        return data
+            data = {}
+            data['resv_no'] = reservation_no
+            data['payment'] = []
+            data['payment'].append({'total_price' : payment.total_price})
+            data['payment'].append({'recv_method' : payment.receive_method})
+            data['payment'].append({'create_on' : payment.create_on})
+            return data
+        else:
+            return {'status' : 'Already paid'}
+    
+    def cancel_reservation(self, reservation_no):
+        reservation = self.search_reservation(reservation_no)
+        if reservation and reservation.status != 'paid':
+            show_seat_list = reservation.show_seat_list
+            for show_seat in show_seat_list:
+                zone = show_seat.zone
+                zone.delete_show_seat(show_seat)
+                self.delete_show_seat(show_seat)
+            account = reservation.account
+            account.delete_reservation(reservation)
+            self.delete_reservation(reservation)
+            return {'status' : 'success'}
+        else:
+            return {'status' : None}
 
     def create_reservation(self, account, event_name, show_date, show_time, seat_list):
         reservation = Reservation(account, self.reservation_no, event_name, show_date, show_time, seat_list)
@@ -132,6 +151,20 @@ class WebController:
         self.reservation_no += 1
         
         return reservation
+    
+    def delete_show_seat(self, show_seat):
+        if show_seat in self.__show_seat_list:
+            self.__show_seat_list.remove(show_seat)
+            return 'success'
+        else:
+            return None
+        
+    def delete_reservation(self, reservation):
+        if reservation in self.__reservation_list:
+            self.__reservation_list.remove(reservation)
+            return 'success'
+        else:
+            return None
     
     def create_payment(self, reservation, totol_price, receive_method):
         payment = Payment(reservation, totol_price, receive_method, create_on= time.strftime("%d-%m-%Y, %H:%M:%S", time.localtime()))
@@ -167,19 +200,22 @@ class WebController:
     def view_reservation(self, account_name):
             account = self.search_account_by_name(account_name)
             reservation_list = account.reservation_list
-            data_list = []
-            
-            for info in reservation_list:
-                data ={}
-                data['account_name'] = info.account.name
-                data['reservation_no'] = info.reservation_no
-                data['event_name'] = info.event_name
-                data['show_date'] = info.show_date
-                data['show_time'] = info.show_time
-                data['status'] = info.status
-                data['show_seat_list'] = info.show_seat_list
-                data_list.append(data)            
-            return data_list
+            data = {}
+            data['reservation'] = []
+
+            for index, reservation in enumerate(reservation_list):
+                data['reservation'].append({'account_name' : reservation.account.name,
+                                            'reservation_no' : reservation.reservation_no,
+                                            'event_name' : reservation.event_name,
+                                            'show_date' : reservation.show_date,
+                                            'show_time' : reservation.show_time,
+                                            'status' : reservation.status,
+                                            'show_seat_list' : []})
+                show_seat_list = reservation.show_seat_list
+                for show_seat in show_seat_list:
+                    data['reservation'][index]['show_seat_list'].append({'seat_no' : show_seat.seat_no})
+          
+            return data
 
     def view_ticket(self, account_name):
         account = self.search_account_by_name(account_name)
@@ -202,31 +238,31 @@ class WebController:
         for event in self.__event_list:
             if event.name == event_name:
                 return event
-        return 'Not Found'
+        return None
     
     def search_reservation(self, reservation_no):
         for reservation in self.__reservation_list:
             if reservation.reservation_no == reservation_no:
                 return reservation
-        return 'Not Found'
+        return None
     
     def search_account_by_name(self, account_name):
         for account in self.__account_list:
             if account.name == account_name:
                 return account
-        return 'Not Found'
+        return None
         
     def search_account_by_id(self, account_id):
         for account in self.__account_list:
             if account.id == account_id:
                 return account
-        return 'Not Found'
+        return None
     
     def search_account_by_username(self, username):
         for account in self.__account_list:
             if username == account.username:
                 return account
-        return 'Not Found'
+        return None
 
 class Account:
     def __init__(self, name, surname, username, password, citizen_id, phone_no, address, special=False):
@@ -278,6 +314,13 @@ class Account:
     
     def add_reservation(self, reservation):
         self.__reservation_list.append(reservation)
+
+    def delete_reservation(self, reservation):
+        if reservation in self.__reservation_list:
+            self.__reservation_list.remove(reservation)
+            return 'success'
+        else:
+            return None
 
 class Event:
     def __init__(self, event_name, event_date, event_hall, ticket_sale_date, ticket_sale_status, intro):
@@ -405,9 +448,16 @@ class Zone:
         if seat_no_splited[0] in self.__row and self.__col[0] <= int(seat_no_splited[1]) <= self.__col[1]:
             show_seat = ShowSeat(seat_no, show, zone)
             self.add_show_seat(show_seat)
-            return 'Success'
+            return show_seat
         else:
             return 'Error'
+        
+    def delete_show_seat(self, show_seat):
+        if show_seat in self.__show_seat_list:
+            self.__show_seat_list.remove(show_seat)
+            return 'success'
+        else:
+            return None
     
 class Hall:
     def __init__(self, hall_name):

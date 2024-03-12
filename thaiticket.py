@@ -110,25 +110,31 @@ class WebController:
 
         return {'resv_no' : reservation.reservation_no}
     
-    def confirm_payment(self, reservation_no, total_pice, receive_method):
+    def confirm_payment(self, reservation_no, total_price, receive_method):
         reservation = self.search_reservation(reservation_no)
         if reservation.status != 'paid':
-            payment = self.create_payment(reservation, total_pice, receive_method)
+            payment = self.create_payment(reservation, total_price, receive_method)
             reservation.set_status_success()
             show_seat_list = reservation.show_seat_list
             account = reservation.account
-            for show_seat in show_seat_list:
-                self.create_ticket(show_seat, account)
+            tickets = []
 
-            data = {}
-            data['resv_no'] = reservation_no
-            data['payment'] = []
-            data['payment'].append({'total_price' : payment.total_price})
-            data['payment'].append({'recv_method' : payment.receive_method})
-            data['payment'].append({'create_on' : payment.create_on})
+            for show_seat in show_seat_list:
+                ticket = self.create_ticket(show_seat, account)
+                tickets.append({'ticket_no': ticket.ticket_no, 'seat_no': ticket.show_seat.seat_no})
+
+            data = {
+                'reservation_no': reservation_no,
+                'payment': {
+                    'total_price': payment.total_price,
+                    'receive_method': payment.receive_method,
+                    'create_on': payment.create_on
+                },
+                'tickets': tickets
+            }
             return data
         else:
-            return {'status' : 'Already paid'}
+            return {'status': 'Already paid'}
     
     def cancel_reservation(self, reservation_no):
         reservation = self.search_reservation(reservation_no)

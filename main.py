@@ -44,6 +44,17 @@ def confirm_payment(reservation_no:int, total_pice:str, receive_method:str):
     data = controller.confirm_payment(reservation_no, total_pice, receive_method)
     return data
 
-@app.get('/yo')
-def yo():
-    pass
+@app.get('/view-reservation')
+def view_reservation(account_name:str):
+    data = controller.view_reservation(account_name)
+    return data
+
+@app.get('/view-ticket')
+def view_ticket(account_name:str):
+    data = controller.view_ticket(account_name)
+    return data
+
+    
+
+
+

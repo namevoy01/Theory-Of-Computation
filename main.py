@@ -43,3 +43,7 @@ def select_seat(account_id:str, event_name:str, show_date:str, show_time:str, zo
 def confirm_payment(reservation_no:int, total_pice:str, receive_method:str):
     data = controller.confirm_payment(reservation_no, total_pice, receive_method)
     return data
+
+@app.get('/yo')
+def yo():
+    pass

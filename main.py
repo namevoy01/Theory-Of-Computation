@@ -36,6 +36,10 @@ def select_zone(account_id:str, event_name:str, show_date:str, show_time:str, zo
 
 @app.get("/select-seat")
 def select_seat(account_id:str, event_name:str, show_date:str, show_time:str, zone_name:str, seat_selected:str):
-    controller.select_seat(account_id, event_name, show_date, show_time, zone_name, seat_selected)
-    return {'status' : 'success'}
+    data = controller.select_seat(account_id, event_name, show_date, show_time, zone_name, seat_selected)
+    return data
 
+@app.post("/confirm-payment")
+def confirm_payment(reservation_no:int, total_pice:str, receive_method:str):
+    data = controller.confirm_payment(reservation_no, total_pice, receive_method)
+    return data

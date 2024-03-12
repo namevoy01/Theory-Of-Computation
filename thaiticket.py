@@ -1,3 +1,5 @@
+import time
+
 class WebController:
     reservation_no = 1
     ticket_no = 1
@@ -98,12 +100,36 @@ class WebController:
         reservation = self.create_reservation(account, event_name, show_date, show_time, seat_selected)
         account.add_reservation(reservation)
 
+        return {'resv_no' : reservation.reservation_no}
+    
+    def confirm_payment(self, reservation_no, total_pice, receive_method):
+        reservation = self.search_reservation(reservation_no)
+        payment = self.create_payment(reservation, total_pice, receive_method)
+        reservation.set_status_success()
+        show_seat_list = reservation.show_seat_list
+        account = reservation.account
+        for show_seat in show_seat_list:
+            self.create_ticket(show_seat, account)
+
+        data = {}
+        data['resv_no'] = reservation_no
+        data['payment'] = []
+        data['payment'].append({'total_price' : payment.total_price})
+        data['payment'].append({'recv_method' : payment.receive_method})
+        data['payment'].append({'create_on' : payment.create_on})
+        return data
+
     def create_reservation(self, account, event_name, show_date, show_time, seat_list):
         reservation = Reservation(account, self.reservation_no, event_name, show_date, show_time, seat_list)
         self.add_reservation(reservation)
         self.reservation_no += 1
         
         return reservation
+    
+    def create_payment(self, reservation, totol_price, receive_method):
+        payment = Payment(reservation, totol_price, receive_method, create_on= time.strftime("%d-%m-%Y, %H:%M:%S", time.localtime()))
+        
+        return payment
     
     def create_ticket(self, show_seat, account):
         ticket = Ticket(self.ticket_no, show_seat)
@@ -166,6 +192,12 @@ class WebController:
                 return event
         return 'Not Found'
     
+    def search_reservation(self, reservation_no):
+        for reservation in self.__reservation_list:
+            if reservation.reservation_no == reservation_no:
+                return reservation
+        return 'Not Found'
+    
     def search_account_by_name(self, account_name):
         for account in self.__account_list:
             if account.name == account_name:
@@ -190,13 +222,6 @@ class Account:
         self.__special = special
         self.__reservation_list = []
         self.__ticket_list = []
-    
-    # def register_special_member(self):
-    #     if self.is_special == False:
-    #         self.__special = True
-    #         return "Success"
-    #     else:
-    #         return "This account is special member!!"
     
     @property
     def name(self):
@@ -401,11 +426,27 @@ class ShowSeat(HallSeat):
         return self.__is_reserved
 
 class Payment:
-    def __init__(self, reservation, total_price, recieve_method, create_on):
+    def __init__(self, reservation, total_price, receive_method, create_on):
         self.__reservation = reservation
         self.__total_price = total_price
-        self.__recieve_method = recieve_method
+        self.__receive_method = receive_method
         self.__create_on = create_on
+
+    @property
+    def reservation(self):
+        return self.__reservation
+    
+    @property
+    def total_price(self):
+        return self.__total_price
+
+    @property
+    def receive_method(self):
+        return self.__receive_method
+
+    @property
+    def create_on(self):
+        return self.__create_on
         
 class Reservation:
     def __init__(self, account, reservation_no, event_name, show_date, show_time, show_seat_list, status = 'Not pay yet'):
@@ -445,6 +486,8 @@ class Reservation:
     def show_seat_list(self):
         return self.__show_seat_list
     
+    def set_status_success(self):
+        self.__status = 'paid'
 
 class Ticket:
     def __init__(self, ticket_no, show_seat):

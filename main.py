@@ -59,7 +59,9 @@ def view_ticket(account_name:str):
     data = controller.view_ticket(account_name)
     return data
 
-    
-
+@app.post('/cancel-reservation')
+def cancel_reservation(reservation_no:int):
+    data = controller.cancel_reservation(reservation_no)
+    return data
 
 

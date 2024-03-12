@@ -134,7 +134,7 @@ TikTok : SimpleP.Entertainment
             Hall_2.add_hall_seat(HallSeat(row+'-'+str(col)))
 
     Hall_3 = Hall('ยูโอบี ไลฟ์')
-    Event_3 = Event('Tom Jones : Ages & Stage Tour - Bangkok','14-03-2567',Hall_3,'16-12-2566-10:00-AM','ON SALE NOW','''
+    Event_3 = Event('Tom Jones: Ages and Stage Tour-Bangkok','14-03-2567',Hall_3,'16-12-2566-10:00-AM','ON SALE NOW','''
 UOB Presale
 ผู้มีบัตรเครดิต UOB รับสิทธิ์ซื้อบัตรในรอบ Pre-sale ได้ โดยใช้บัตรเครดิต UOB ในการชำระเงิน ในวันที่ 15 ธันวาคม 2566 เวลา 10:00 น. - 22:00 น. เปิดจำหน่ายทางออนไลน์ที่  www.thaiticketmajor.com
 ***การซื้อบัตรในวันที่ 15 ธันวาคม 2566  โปรดกดเพื่อรอรับคิวซื้อบัตรได้ที่หน้าเว็บไซต์ตั้งแต่เวลา 9.00 น.

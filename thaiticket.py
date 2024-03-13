@@ -39,7 +39,7 @@ class WebController:
             return "Error"
 
     def select_event(self, event_name):
-        event = self.search_event(event_name)
+        event = self.search_event(event_name.strip())
         data = {}
         data['event_name'] = event.name
         data['event_date'] = event.date
@@ -59,7 +59,7 @@ class WebController:
         return data
     
     def select_show(self, event_name, show_date, show_time):
-        event = self.search_event(event_name)
+        event = self.search_event(event_name.strip())
         data = {}
         data['zone_available_seat'] = []
         zone_list = event.zone_list
@@ -72,9 +72,9 @@ class WebController:
         return data
     
     def select_zone(self, account_id, event_name, show_date, show_time, zone_name):
-        event = self.search_event(event_name)
-        show = event.search_show(show_date, show_time)
-        zone = event.search_zone(zone_name)
+        event = self.search_event(event_name.strip())
+        show = event.search_show(show_date.strip(), show_time.strip())
+        zone = event.search_zone(zone_name.strip())
         zone_row_list = zone.row
         zone_col_range = zone.col
         zone_show_seat_list = zone.show_seat_list
@@ -97,9 +97,9 @@ class WebController:
     
     def select_seat(self, account_id, event_name, show_date, show_time, zone_name, seat_selected):
         account = self.search_account_by_id(account_id)
-        event = self.search_event(event_name)
-        show = event.search_show(show_date, show_time)
-        zone = event.search_zone(zone_name)
+        event = self.search_event(event_name.strip())
+        show = event.search_show(show_date.strip(), show_time.strip())
+        zone = event.search_zone(zone_name.strip())
         seat_selected_splited = seat_selected.split(',')
         show_seat_list = []
         for seat_no in seat_selected_splited:

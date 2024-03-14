@@ -39,7 +39,7 @@ class WebController:
             return "Error"
 
     def select_event(self, event_name):
-        event = self.search_event(event_name.strip())
+        event = self.search_event(event_name)
         data = {}
         data['event_name'] = event.name
         data['event_date'] = event.date
@@ -59,7 +59,7 @@ class WebController:
         return data
     
     def select_show(self, event_name, show_date, show_time):
-        event = self.search_event(event_name.strip())
+        event = self.search_event(event_name)
         data = {}
         data['zone_available_seat'] = []
         zone_list = event.zone_list
@@ -72,9 +72,9 @@ class WebController:
         return data
     
     def select_zone(self, account_id, event_name, show_date, show_time, zone_name):
-        event = self.search_event(event_name.strip())
-        show = event.search_show(show_date.strip(), show_time.strip())
-        zone = event.search_zone(zone_name.strip())
+        event = self.search_event(event_name)
+        show = event.search_show(show_date, show_time)
+        zone = event.search_zone(zone_name)
         zone_row_list = zone.row
         zone_col_range = zone.col
         zone_show_seat_list = zone.show_seat_list
@@ -83,10 +83,11 @@ class WebController:
         hall_all_seat_no = [hall_seat.seat_no for hall_seat in hall_seat_list]
 
         data = {}
-        data['zone_seat'] = WebController.check_available_seat_in_zone_of_show(zone_show_seat_list, \
+        data['zone_seat'] = self.check_available_seat_in_zone_of_show(zone_show_seat_list, \
                                                                                hall_all_seat_no, show, \
                                                                                 zone_row_list, \
                                                                                 zone_col_range)
+        data['zone_price'] = zone.price
         account = self.search_account_by_id(account_id)
         address = account.address
         special = account.is_special
@@ -97,9 +98,9 @@ class WebController:
     
     def select_seat(self, account_id, event_name, show_date, show_time, zone_name, seat_selected):
         account = self.search_account_by_id(account_id)
-        event = self.search_event(event_name.strip())
-        show = event.search_show(show_date.strip(), show_time.strip())
-        zone = event.search_zone(zone_name.strip())
+        event = self.search_event(event_name)
+        show = event.search_show(show_date, show_time)
+        zone = event.search_zone(zone_name)
         seat_selected_splited = seat_selected.split(',')
         show_seat_list = []
         for seat_no in seat_selected_splited:
@@ -184,7 +185,7 @@ class WebController:
         
         return ticket
     
-    def check_available_seat_in_zone_of_show(show_seat_list, hall_seat_no_list, show, zone_row_list, zone_col_range):
+    def check_available_seat_in_zone_of_show(self, show_seat_list, hall_seat_no_list, show, zone_row_list, zone_col_range):
         data = []
         show_seat_no_list = []
         for show_seat in show_seat_list:

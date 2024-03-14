@@ -272,8 +272,10 @@ UOB Presale
     for event in Event_list:
         thaiticket.add_event(event)
 
-    Ink = Account('Pruettinan', 'Limlertvaree', 'legazing', 'inkink', '12345', '0987654321', 'ปักธงชัย')
+    Ink = Account('Pruettinan', 'Limlertvaree', 'legazink', 'inkink', '12345', '0987654321', 'ปักธงชัย')
+    Eak = Account('Detsukmongkol', 'Bunta', 'eakomteen', '555baba', '12346', '1234567890', 'เซ็นทรัล', True)
     thaiticket.add_account(Ink)
+    thaiticket.add_account(Eak)
 
     return thaiticket
 

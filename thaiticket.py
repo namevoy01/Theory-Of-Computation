@@ -33,10 +33,11 @@ class WebController:
 
     def login(self, username, password):
         account = self.search_account_by_username(username)
-        if password == str(account.password):
-            return "Success"
+        if account and password == str(account.password):
+            return {'status' : "Success",
+                    'account_id' : account.id}
         else:
-            return "Error"
+            return {'status' : None}
 
     def select_event(self, event_name):
         event = self.search_event(event_name)
@@ -89,9 +90,7 @@ class WebController:
                                                                                 zone_col_range)
         data['zone_price'] = zone.price
         account = self.search_account_by_id(account_id)
-        address = account.address
         special = account.is_special
-        data['account_address'] = address
         data['is_special'] = special
 
         return data

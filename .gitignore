@@ -1,0 +1,15 @@
+
+*.pyc
+
+myenv
+myenv/Scripts/pip3.8.exe
+myenv/Lib/site-packages/setuptools/script.tmpl
+myenv/Lib/site-packages/setuptools/script (dev).tmpl
+myenv/Lib/site-packages/setuptools/gui.exe
+myenv/Lib/site-packages/setuptools/gui-64.exe
+myenv/Lib/site-packages/setuptools/gui-32.exe
+myenv/Lib/site-packages/setuptools/command/launcher manifest.xml
+myenv/Lib/site-packages/setuptools/cli.exe
+myenv/Lib/site-packages/setuptools/cli-64.exe
+myenv/Lib/site-packages/setuptools/cli-32.exe
+myenv/Lib/site-packages/pip/_vendor/distlib/_backport/sysconfig.cfg

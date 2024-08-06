@@ -11,9 +11,9 @@
 
 
 2) มี Project อยู่แล้ว
-1. เข้า C:\Users\Path\Documents\GitHubTheory-Of-Computation
+1. เข้า C:\Users\Path\Documents\GitHub\Theory-Of-Computation
 2. myenv\Scripts\activate
-3. เข้า C:\Users\Path\Documents\GitHubTheory-Of-Computation\fastapi-backend
+3. เข้า C:\Users\Path\Documents\GitHub\Theory-Of-Computation\fastapi-backend
 4. uvicorn main:app --reload
 
 ---------------------------------------------------------------------------

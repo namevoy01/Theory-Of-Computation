@@ -1,6 +1,8 @@
 ต้องรันทั้ง front-end และ back-end พร้อมกัน
-
+เปิด CMD และทำตามวิธีด้านล่าง
 ---------------------------------------------------------------------------
+back-end
+
 1) ติดตั้งครั้งแรก วิธี RUN back-end
 1. เข้า C:\Users\Path\Documents\GitHub\Theory-Of-Computation
 2. python -m venv myenv
@@ -17,6 +19,7 @@
 4. uvicorn main:app --reload
 
 ---------------------------------------------------------------------------
+front-end
 
 1) ติดตั้งครั้งแรก วิธี RUN front-end
 1. เข้า C:\Users\Path\Documents\GitHub\Theory-Of-Computation\frontend

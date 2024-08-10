@@ -10,7 +10,6 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],  # หรือระบุ HTTP methods ที่อนุญาต เช่น ["GET", "POST"]
     allow_headers=["*"],  # หรือระบุ headers ที่อนุญาต\
-    Test
 )
 
 @app.get("/api/data")

@@ -9,7 +9,6 @@ function App() {
       .then(response => response.json())
       .then(data => setData(data.data))
       .catch(error => console.error('Error:', error));
-    main-front-end
   }, []);
 
   return (

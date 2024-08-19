@@ -38,7 +38,7 @@ function App() {
               <button class="bg-violet-800 text-white rounded-full px-4 py-2 border border-black focus:outline-none">Artist</button>
             </div>
 
-            <div class="mt-6 space-y-4">
+            <div class="mt-6 space-y-4 overflow-y-auto max-h-80">
               <div class="flex items-center space-x-4 rounded-full w-10 h-10">
                 <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEj1SmQrJA78ga-YlqBOxRfT3NJTO2m1N3HWfO_NrtkqtdUGQv" alt="Artist" class="rounded-full" />
                 <div>
@@ -61,6 +61,14 @@ function App() {
                 </div>
               </div>
             </div>
+            <div class="flex items-center space-x-4 rounded-full w-10 h-10">
+                <img src="https://www.thaiticketmajor.com/variety/img_content/imgeditor/S__77496392.jpg" alt="Artist" class="rounded-full" />
+                <div>
+                  <div class="font-bold text-gray-700">Lipta</div>
+                  <div class="text-sm text-gray-500">Artist</div>
+                </div>
+              </div>
+
           </div>
 
           <div class="col-span-3 bg-white p-4 rounded-lg shadow-lg">

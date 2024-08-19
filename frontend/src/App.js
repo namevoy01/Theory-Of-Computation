@@ -86,14 +86,14 @@ function App() {
             <div class="mt-6">
               <div class="min-w-full bg-white">
                 <div class="w-full bg-white flex items-center px-4 py-2">
-                  <div class="w-1/12 text-left">No</div>
-                  <div class="w-5/12 text-left">Name</div>
-                  <div class="w-4/12 text-left">Album</div>
-                  <div class="w-2/12 text-right">Time</div>
+                  <div class="w-1/12 text-left font-bold">#</div>
+                  <div class="w-5/12 text-left font-bold">Name</div>
+                  <div class="w-4/12 text-left font-bold">Album</div>
+                  <div class="w-2/12 text-right font-bold">Time</div>
                 </div>
 
                 <div class="bg-violet space-y-4">
-                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-lg">
+                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
                     <div class="w-1/12">1</div>
                     <div class="w-5/12 flex items-center space-x-2">
                       <img
@@ -110,7 +110,7 @@ function App() {
                     <div class="w-2/12 text-right">2:18</div>
                   </div>
 
-                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-lg">
+                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
                     <div class="w-1/12">2</div>
                     <div class=" w-5/12 flex items-center space-x-2">
                       <img
@@ -129,7 +129,7 @@ function App() {
                     <div class="w-2/12 text-right">3:48</div>
                   </div>
 
-                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-lg">
+                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
                     <div class="w-1/12">3</div>
                     <div class="w-5/12 flex items-center space-x-2">
                       <img

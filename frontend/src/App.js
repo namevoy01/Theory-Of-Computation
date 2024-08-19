@@ -36,8 +36,8 @@ function App() {
               </div>
             </div>
             <div class="mt-8">
-              <button class="bg-violet-900 text-white  rounded-full px-4 py-2 mr-2 focus:outline-none">Album</button>
-              <button class="bg-violet-900 text-white rounded-full px-4 py-2  focus:outline-none">Artist</button>
+              <button class="bg-violet-900 text-white  rounded-full px-4 py-2 mr-2 focus:outline-none hover:bg-violet-300 hover:text-black">Album</button>
+              <button class="bg-violet-900 text-white rounded-full px-4 py-2  focus:outline-none hover:bg-violet-300 hover:text-black">Artist</button>
             </div>
 
             <div class="mt-6 space-y-4 overflow-y-auto max-h-80">
@@ -75,8 +75,8 @@ function App() {
           <div class="col-span-3 bg-white p-4 rounded-lg shadow-lg">
             <div class="flex items-center justify-between">
               <div>
-                <button class="bg-violet-900 text-white  rounded-full px-4 py-2 mr-2 focus:outline-none">All</button>
-                <button class="bg-violet-900 text-white rounded-full px-4 py-2  focus:outline-none">TOP 50</button>
+                <button class="bg-violet-900 text-white  rounded-full px-4 py-2 mr-2 focus:outline-none hover:bg-violet-300 hover:text-black">All</button>
+                <button class="bg-violet-900 text-white rounded-full px-4 py-2  focus:outline-none hover:bg-violet-300 hover:text-black">TOP 50</button>
               </div>
               <div class="bg-black-100 h-8 w-16 flex items-center justify-center">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Github-desktop-logo-symbol.svg" alt="Artist" class="rounded-full" />

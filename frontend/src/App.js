@@ -28,7 +28,7 @@ function App() {
                 <div class="flex items-center space-x-2">
                   <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   </svg>
-                  <input type="text"className="font-semibold text-lg text-gray-700 bg-white rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  <input type="text"className="font-semibold border border-violet-500 text-lg text-gray-700 bg-white rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Search"/>
                 </div>
               </div>
@@ -85,7 +85,7 @@ function App() {
                     <th class="py-2 text-right pr-4">Time</th>
                   </tr>
                 </thead>
-                <tbody class="bg-violet space-y-4">
+                <tbody class="bg-violet space-y-4 shadow-lg">
 
                   <tr class="border-b bg-violet-100" >
                     <td class="py-2 pl-4">1</td>

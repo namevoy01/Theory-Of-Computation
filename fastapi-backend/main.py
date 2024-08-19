@@ -15,3 +15,7 @@ app.add_middleware(
 @app.get("/api/data")
 def get_data():
     return {"data": "This is data from FastAPI"}
+
+@app.get("/")
+def home():
+    return {"data" : "Hello World!"}

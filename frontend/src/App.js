@@ -65,51 +65,79 @@ function App() {
               </button>
             </div>
 
-            <div class="mt-6 space-y-4 overflow-y-auto max-h-80">
-              <div class="flex items-center space-x-4 rounded-full w-10 h-10">
+            <div class="mt-6 space-y-4 overflow-y-auto max-h-96">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
                 <img
                   src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEj1SmQrJA78ga-YlqBOxRfT3NJTO2m1N3HWfO_NrtkqtdUGQv"
                   alt="Artist"
-                  class="rounded-full"
+                  class="rounded-full w-10 h-10"
                 />
                 <div>
                   <div class="font-bold text-gray-700">2Ecstasy</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
-              </div>
-              <div class="flex items-center space-x-4 rounded-full w-10 h-10">
+              </button>
+
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
                 <img
                   src="https://www.thaiticketmajor.com/variety/img_content/imgeditor/S__77496392.jpg"
                   alt="Artist"
-                  class="rounded-full"
+                  class="rounded-full w-10 h-10"
                 />
                 <div>
                   <div class="font-bold text-gray-700">Lipta</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
-              </div>
-              <div class="flex items-center space-x-4 rounded-full w-10 h-10">
+              </button>
+
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
                 <img
                   src="https://www.myband.co.th/uploads/20181230/94cab1a3d6aed152156b395b0fefd2fc.png"
                   alt="Artist"
-                  class="rounded-full"
+                  class="rounded-full w-10 h-10"
                 />
                 <div>
                   <div class="font-bold text-gray-700">Bowkylion</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
-              </div>
-              <div class="flex items-center inline-block space-x-4 rounded-full w-10 h-10">
+              </button>
+
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
                 <img
                   src="https://i.pinimg.com/originals/1b/39/5e/1b395e47be82b4d18b21fcbc3d602d2b.jpg"
                   alt="Artist"
-                  class="rounded-full"
+                  class="rounded-full w-10 h-10"
                 />
                 <div>
                   <div class="font-bold text-gray-700">Downuea</div>
                   <div class="text-sm text-gray-500">Artisxxxxt</div>
                 </div>
-              </div>
+              </button>
+
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+                <img
+                  src="https://i.pinimg.com/originals/4f/fb/69/4ffb698cf4fbb010d692f6e8c14c3f2d.jpg"
+                  alt="Artist"
+                  class="rounded-full w-10 h-10"
+                />
+                <div>
+                  <div class="font-bold text-gray-700">XXXX</div>
+                  <div class="text-sm text-gray-500">Artist</div>
+                </div>
+              </button>
+
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+                <img
+                  src="https://i.pinimg.com/originals/5c/5d/a2/5c5da29b48e58e203b3511a1053f443e.jpg"
+                  alt="Artist"
+                  class="rounded-full w-10 h-10"
+                />
+                <div>
+                  <div class="font-bold text-gray-700">YYYY</div>
+                  <div class="text-sm text-gray-500">Artist</div>
+                </div>
+              </button>
+              
             </div>
           </div>
 
@@ -119,8 +147,17 @@ function App() {
                 <button class="bg-violet-900 text-white  rounded-full px-4 py-2 mr-2 focus:outline-none hover:bg-violet-300 hover:text-black">
                   All
                 </button>
-                <button class="bg-violet-900 text-white rounded-full px-4 py-2  focus:outline-none hover:bg-violet-300 hover:text-black">
+                <button class="bg-violet-900 text-white rounded-full px-4 py-2 mr-2  focus:outline-none hover:bg-violet-300 hover:text-black">
+                  TOP 10
+                </button>
+                <button class="bg-violet-900 text-white rounded-full px-4 py-2 mr-2  focus:outline-none hover:bg-violet-300 hover:text-black">
+                  TOP 30
+                </button>
+                <button class="bg-violet-900 text-white rounded-full px-4 py-2 mr-2  focus:outline-none hover:bg-violet-300 hover:text-black">
                   TOP 50
+                </button>
+                <button class="bg-violet-900 text-white rounded-full px-4 py-2 mr-2  focus:outline-none hover:bg-violet-300 hover:text-black">
+                  TOP 100
                 </button>
               </div>
               <div class="bg-black-100 h-8 w-16 flex items-center justify-center">
@@ -194,7 +231,7 @@ function App() {
                     <div class="w-4/12">DAY ONE</div>
                     <div class="w-2/12 text-right">4:32</div>
                   </div>
-                                  
+
                   <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
                     <div class="w-1/12">4</div>
                     <div class="w-5/12 flex items-center space-x-2">
@@ -204,7 +241,9 @@ function App() {
                         class="rounded-full w-10 h-10"
                       />
                       <div>
-                        <div class="font-bold text-gray-700">มักสาวคนมีเจ้าของ</div>
+                        <div class="font-bold text-gray-700">
+                          มักสาวคนมีเจ้าของ
+                        </div>
                         <div class="text-sm text-gray-500">Downuea</div>
                       </div>
                     </div>

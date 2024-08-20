@@ -260,7 +260,7 @@ function App() {
                     <div class="w-2/12 text-right">3:12</div>
                   </div>
                   <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
-                    <div class="w-1/12">4</div>
+                    <div class="w-1/12">5</div>
                     <div class="w-5/12 flex items-center space-x-2">
                       <img
                         src="https://i.pinimg.com/564x/e9/a3/47/e9a34783d9e719ce508e6bb573d6a12c.jpg"

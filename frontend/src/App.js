@@ -66,7 +66,7 @@ function App() {
             </div>
 
             <div class="mt-6 space-y-4 overflow-y-auto max-h-96">
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
                 <img
                   src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEj1SmQrJA78ga-YlqBOxRfT3NJTO2m1N3HWfO_NrtkqtdUGQv"
                   alt="Artist"
@@ -78,7 +78,7 @@ function App() {
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
                 <img
                   src="https://www.thaiticketmajor.com/variety/img_content/imgeditor/S__77496392.jpg"
                   alt="Artist"
@@ -90,7 +90,7 @@ function App() {
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
                 <img
                   src="https://www.myband.co.th/uploads/20181230/94cab1a3d6aed152156b395b0fefd2fc.png"
                   alt="Artist"
@@ -102,7 +102,7 @@ function App() {
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
                 <img
                   src="https://i.pinimg.com/originals/1b/39/5e/1b395e47be82b4d18b21fcbc3d602d2b.jpg"
                   alt="Artist"
@@ -110,11 +110,11 @@ function App() {
                 />
                 <div>
                   <div class="font-bold text-gray-700">Downuea</div>
-                  <div class="text-sm text-gray-500">Artisxxxxt</div>
+                  <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
                 <img
                   src="https://i.pinimg.com/originals/4f/fb/69/4ffb698cf4fbb010d692f6e8c14c3f2d.jpg"
                   alt="Artist"
@@ -126,7 +126,7 @@ function App() {
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-soild border-2 border-gray-300 hover:border-gray-400 focus:outline-none">
+              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
                 <img
                   src="https://i.pinimg.com/originals/5c/5d/a2/5c5da29b48e58e203b3511a1053f443e.jpg"
                   alt="Artist"
@@ -137,7 +137,6 @@ function App() {
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
-              
             </div>
           </div>
 

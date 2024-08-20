@@ -65,83 +65,95 @@ function App() {
               </button>
             </div>
 
-            <div class="mt-6 space-y-4 overflow-y-auto max-h-96">
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
+            <div class="mt-6 space-y-4 overflow-y-auto max-h-[50vh]">
+              <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEj1SmQrJA78ga-YlqBOxRfT3NJTO2m1N3HWfO_NrtkqtdUGQv"
                   alt="Artist"
-                  class="rounded-full w-10 h-10"
+                  class="rounded-lg w-20 h-20"
                 />
                 <div>
-                  <div class="font-bold text-gray-700">2Ecstasy</div>
+                  <div class="font-bold text-gray-700 text-lg">2Ecstasy</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
+              <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://www.thaiticketmajor.com/variety/img_content/imgeditor/S__77496392.jpg"
                   alt="Artist"
-                  class="rounded-full w-10 h-10"
+                  class="rounded-lg w-20 h-20"
                 />
                 <div>
-                  <div class="font-bold text-gray-700">Lipta</div>
+                  <div class="font-bold text-gray-700 text-lg">Lipta</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
+              <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://www.myband.co.th/uploads/20181230/94cab1a3d6aed152156b395b0fefd2fc.png"
                   alt="Artist"
-                  class="rounded-full w-10 h-10"
+                  class="rounded-lg w-20 h-20"
                 />
                 <div>
-                  <div class="font-bold text-gray-700">Bowkylion</div>
+                  <div class="font-bold text-gray-700 text-lg">Bowkylion</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
+              <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://i.pinimg.com/originals/1b/39/5e/1b395e47be82b4d18b21fcbc3d602d2b.jpg"
                   alt="Artist"
-                  class="rounded-full w-10 h-10"
+                  class="rounded-lg w-20 h-20"
                 />
                 <div>
-                  <div class="font-bold text-gray-700">Downuea</div>
+                  <div class="font-bold text-gray-700 text-lg">Downuea</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
+              <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://i.pinimg.com/originals/4f/fb/69/4ffb698cf4fbb010d692f6e8c14c3f2d.jpg"
                   alt="Artist"
-                  class="rounded-full w-10 h-10"
+                  class="rounded-lg w-20 h-20 "
                 />
                 <div>
-                  <div class="font-bold text-gray-700">XXXX</div>
+                  <div class="font-bold text-gray-700 text-lg">XXXX</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
 
-              <button class="flex items-center space-x-4 rounded-lg p-2 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-20">
+              <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://i.pinimg.com/originals/5c/5d/a2/5c5da29b48e58e203b3511a1053f443e.jpg"
                   alt="Artist"
-                  class="rounded-full w-10 h-10"
+                  class="rounded-lg w-20 h-20"
                 />
                 <div>
-                  <div class="font-bold text-gray-700">YYYY</div>
+                  <div class="font-bold text-gray-700 text-lg">YYYY</div>
                   <div class="text-sm text-gray-500">Artist</div>
                 </div>
               </button>
+
             </div>
+
           </div>
 
+
+
           <div class="col-span-3 bg-white p-4 rounded-lg shadow-lg">
-            <div class="flex items-center justify-between">
+            <div class="border-b bg-gray-200 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl h-40">
+              <img
+                src="https://i.pinimg.com/originals/e7/16/55/e7165502b2a1cf61fa81b20e02bad088.gif"
+                alt="New Song"
+                class="rounded-lg w-full h-full object-cover"
+              />
+            </div>
+
+            <div class="flex items-center justify-between mt-6">
               <div>
                 <button class="bg-violet-900 text-white  rounded-full px-4 py-2 mr-2 focus:outline-none hover:bg-violet-300 hover:text-black">
                   All
@@ -159,17 +171,19 @@ function App() {
                   TOP 100
                 </button>
               </div>
-              <div class="bg-black-100 h-8 w-16 flex items-center justify-center">
+              {/* <div class="bg-black-100 h-8 w-16 flex items-center justify-center">
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Github-desktop-logo-symbol.svg"
                   alt="Artist"
                   class="rounded-full"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div class="mt-6">
+
               <div class="min-w-full bg-white">
+
                 <div class="w-full bg-white flex items-center px-4 py-2">
                   <div class="w-1/12 text-left font-bold">#</div>
                   <div class="w-5/12 text-left font-bold">Name</div>
@@ -177,14 +191,14 @@ function App() {
                   <div class="w-2/12 text-right font-bold">Time</div>
                 </div>
 
-                <div class="bg-violet space-y-4">
-                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
+                <div class="bg-violet space-y-4 overflow-y-auto max-h-[400px]">
+                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl ">
                     <div class="w-1/12">1</div>
                     <div class="w-5/12 flex items-center space-x-2">
                       <img
                         src="https://f.ptcdn.info/615/084/000/lxtkc0zaiBPvh1mi77z-o.jpg"
                         alt="Rockstar"
-                        class="rounded-full w-10 h-10"
+                        class="rounded-lg w-20 h-20"
                       />
                       <div>
                         <div class="font-bold text-gray-700">Rockstar</div>
@@ -201,12 +215,10 @@ function App() {
                       <img
                         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiP2OKii3peB3FGvp2liul841wFN8DbJuxYQ&s"
                         alt="THE VOYS"
-                        class="rounded-full w-10 h-10"
+                        class="rounded-lg w-20 h-20"
                       />
                       <div>
-                        <div class="font-bold text-gray-700">
-                          ลบไม่ได้ช่วยให้ลืม
-                        </div>
+                        <div class="font-bold text-gray-700">ลบไม่ได้ช่วยให้ลืม</div>
                         <div class="text-sm text-gray-500">INK WARUNTORN</div>
                       </div>
                     </div>
@@ -220,7 +232,7 @@ function App() {
                       <img
                         src="https://siamdara.com/cms/uploads/music/IMG-66627644050e00.75763144.jpg"
                         alt="DAY ONE"
-                        class="rounded-full w-10 h-10"
+                        class="rounded-lg w-20 h-20"
                       />
                       <div>
                         <div class="font-bold text-gray-700">DAY ONE</div>
@@ -237,19 +249,34 @@ function App() {
                       <img
                         src="https://i.pinimg.com/originals/1b/39/5e/1b395e47be82b4d18b21fcbc3d602d2b.jpg"
                         alt="New Song"
-                        class="rounded-full w-10 h-10"
+                        class="rounded-lg w-20 h-20"
                       />
                       <div>
-                        <div class="font-bold text-gray-700">
-                          มักสาวคนมีเจ้าของ
-                        </div>
+                        <div class="font-bold text-gray-700">มักสาวคนมีเจ้าของ</div>
                         <div class="text-sm text-gray-500">Downuea</div>
                       </div>
                     </div>
                     <div class="w-4/12">X1</div>
+                    <div class="w-2/12 text-right">3:12</div>
+                  </div>
+                  <div class="border-b bg-violet-100 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl">
+                    <div class="w-1/12">4</div>
+                    <div class="w-5/12 flex items-center space-x-2">
+                      <img
+                        src="https://i.pinimg.com/564x/e9/a3/47/e9a34783d9e719ce508e6bb573d6a12c.jpg"
+                        alt="New Song"
+                        class="rounded-lg w-20 h-20"
+                      />
+                      <div>
+                        <div class="font-bold text-gray-700">เหนืออยากมีเมียน้อย</div>
+                        <div class="text-sm text-gray-500">Downuea</div>
+                      </div>
+                    </div>
+                    <div class="w-4/12">Downueady</div>
                     <div class="w-2/12 text-right">3:22</div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>

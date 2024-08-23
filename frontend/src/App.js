@@ -65,7 +65,7 @@ function App() {
               </button>
             </div>
 
-            <div class="mt-6 space-y-4 overflow-y-auto max-h-[50vh]">
+            <div class="mt-6 space-y-4 overflow-y-auto max-h-[80vh]">
               <button class="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24">
                 <img
                   src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTEj1SmQrJA78ga-YlqBOxRfT3NJTO2m1N3HWfO_NrtkqtdUGQv"
@@ -145,7 +145,7 @@ function App() {
 
 
           <div class="col-span-3 bg-white p-4 rounded-lg shadow-lg">
-            <div class="border-b bg-gray-200 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl h-40">
+            <div class="border-b bg-gray-200 flex justify-between items-center px-4 py-2 shadow-xl rounded-xl h-60">
               <img
                 src="https://i.pinimg.com/originals/e7/16/55/e7165502b2a1cf61fa81b20e02bad088.gif"
                 alt="New Song"
@@ -177,7 +177,7 @@ function App() {
                   alt="Artist"
                   class="rounded-full"
                 />
-              </div> */}
+              </div> */} 
             </div>
 
             <div class="mt-6">

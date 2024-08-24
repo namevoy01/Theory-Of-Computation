@@ -124,6 +124,6 @@ def search_songs_by_keyword(keyword):
     return search_results
 
 # print(All_Songs())
-print(All_Artist())
+# print(All_Artist())
 # print(search_songs_by_artist("Taylor Swift"))
 # print(search_songs_by_keyword('billie'))

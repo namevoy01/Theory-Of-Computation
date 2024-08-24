@@ -24,7 +24,6 @@ for img in img_list:
         img_to_append.extend(chart_img)
 img_to_append = img_to_append[1::]
 
-
 def artist_song_image():
     x = []
     for i in range(len(h3_list)):
@@ -89,7 +88,7 @@ def All_Artist():
 
 def search_songs_by_artist(artist_name):
     allSong = All_Songs()
-
+    
     artist_songs = {
         'artistID': None,
         'artistName': artist_name,
@@ -99,6 +98,8 @@ def search_songs_by_artist(artist_name):
     artist_id = 1
     artist_found = False
     for song in allSong:
+        artist_name = song['artist'].replace('-', '/')
+        
         if song['artist'] == artist_name:
             if not artist_found:
                 artist_songs['artistID'] = artist_id
@@ -146,5 +147,5 @@ def export_to_csv(filename):
 # export_to_csv('top_songs.csv')
 # print(All_Songs())
 # print(All_Artist())
-# print(search_songs_by_artist("AC/DC"))
+print(search_songs_by_artist("AC/DC"))
 # print(search_songs_by_keyword('billie'))

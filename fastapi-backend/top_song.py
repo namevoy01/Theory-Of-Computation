@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import random
+
+########## SCAP WEB ########## 
 
 r = requests.get('https://www.billboard.com/charts/billboard-200/')
 soup = BeautifulSoup(r.content, 'html.parser')
@@ -30,5 +33,97 @@ def artist_song_image():
 
     return x
 
+########## MANAGE DATA ##########
 
-print(artist_song_image())
+def All_Songs():
+    data = artist_song_image()
+    allSong = []
+    song_id = 1
+
+    for rank, song in enumerate(data, start=1):
+        song_info = {
+            'id': song_id,
+            'artist': song['Artist'],
+            'song': song['Song'],
+            'img': song['Image'],
+            'rank': str(rank)
+        }
+        
+        allSong.append(song_info)
+        song_id += 1
+
+    return allSong
+
+def All_Artist():
+    allSong = All_Songs()
+    artist_data = {}
+    
+    artist_id = 1
+    for song in allSong:
+        artist_name = song['artist']
+        if artist_name not in artist_data:
+            artist_data[artist_name] = {
+                'artistID': artist_id,
+                'artistName': artist_name,
+                'artistImg' : '',
+                'artistSong': []
+            }
+            artist_id += 1
+        
+        artist_data[artist_name]['artistSong'].append({
+            'id': song['id'],
+            'song': song['song'],
+            'img': song['img'],
+            'rank': song['rank']
+        })
+
+        for artist_name, artist_info in artist_data.items():
+            artist_songs = artist_info['artistSong']
+            random_song = random.choice(artist_songs)
+            artist_info['artistImg'] = random_song['img']
+
+    return list(artist_data.values())
+
+def search_songs_by_artist(artist_name):
+    allSong = All_Songs()
+
+    artist_songs = {
+        'artistID': None,
+        'artistName': artist_name,
+        'artistSong': []
+    }
+
+    artist_id = 1
+    artist_found = False
+    for song in allSong:
+        if song['artist'] == artist_name:
+            if not artist_found:
+                artist_songs['artistID'] = artist_id
+                artist_found = True
+            artist_songs['artistSong'].append({
+                'id': song['id'],
+                'song': song['song'],
+                'img': song['img'],
+                'rank': song['rank']
+            })
+            artist_id += 1
+
+    return artist_songs
+
+def search_songs_by_keyword(keyword):
+    data = All_Songs()
+    search_results = []
+
+    for song_info in data:
+        if keyword.lower() in song_info['artist'].lower() or keyword.lower() in song_info['song'].lower():
+            search_results.append(song_info)
+
+    if not search_results:
+        return "Not Found"
+    
+    return search_results
+
+# print(All_Songs())
+# print(All_Artist())
+# print(search_songs_by_artist("Taylor Swift"))
+# print(search_songs_by_keyword('billie'))

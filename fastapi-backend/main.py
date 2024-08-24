@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from top_song import *
 from typing import *
 
@@ -33,3 +34,9 @@ def get_artist_songs(artist_name: str):
 def search_songs(keyword: str):
     search_results = search_songs_by_keyword(keyword)
     return search_results
+
+@app.get("/export_to_csv")
+def get_csv():
+    filename = 'top_song.csv'
+    export_to_csv(filename)
+    return FileResponse(filename, media_type='text/csv', filename=filename)

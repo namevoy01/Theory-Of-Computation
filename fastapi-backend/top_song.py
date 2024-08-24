@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import random
+import csv
 
 ########## SCAP WEB ########## 
 
@@ -123,6 +124,24 @@ def search_songs_by_keyword(keyword):
     
     return search_results
 
+def export_to_csv(filename):
+    data = All_Songs()
+
+    fieldnames = ['SongRank', 'SongName', 'ArtistName', 'SongImg']
+
+    with open(filename, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for song in data:
+            writer.writerow({
+                'SongRank': song['rank'],
+                'SongName': song['song'],
+                'ArtistName': song['artist'],
+                'SongImg': song['img'],
+            })
+
+# export_to_csv('artists_songs.csv')
 # print(All_Songs())
 # print(All_Artist())
 # print(search_songs_by_artist("Taylor Swift"))

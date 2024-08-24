@@ -43,8 +43,18 @@ function App() {
   const handleArtistClick = (artistName) => {
     fetch(`http://localhost:8000/get_artist/${encodeURIComponent(artistName)}`)
       .then((response) => response.json())
-      .then((data) => setSelectedArtistSongs(Array.isArray(data.artistSong) ? data.artistSong : []))
+      .then((data) => {
+        const artistSongs = Array.isArray(data.artistSong) ? data.artistSong : [];
+        setSelectedArtistSongs(
+          artistSongs.map(song => ({ ...song, artist: artistName })) // Add artist name to each song
+        );
+      })
       .catch((error) => console.error("Error:", error));
+  };
+
+  // Function to handle CSV download
+  const handleCsvDownload = () => {
+    window.location.href = "http://127.0.0.1:8000/export_to_csv";
   };
 
   return (
@@ -61,12 +71,17 @@ function App() {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                   />
                 </svg>
-                <span className="font-semibold text-lg text-gray-700">Home</span>
+                <button
+                  className="font-semibold text-lg text-gray-700"
+                  onClick={() => window.location.reload()}
+                >
+                  Home
+                </button>
               </div>
               <div className="flex items-center space-x-2">
                 <svg
@@ -76,8 +91,8 @@ function App() {
                   viewBox="0 0 24 24"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
                   />
                 </svg>
@@ -91,13 +106,19 @@ function App() {
               </div>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-8 flex justify-between items-center">
               <div className="text-black font-bold text-xl rounded-full px-4 py-2">
                 Artist
               </div>
+              <button
+                className="bg-violet-900 text-white rounded-full px-4 py-2 focus:outline-none hover:bg-violet-300 hover:text-black"
+                onClick={handleCsvDownload}
+              >
+                CSV
+              </button>
             </div>
 
-            <div className="mt-6 space-y-4 overflow-y-auto max-h-[80vh]">
+            <div className="mt-6 space-y-4 overflow-y-auto max-h-[90vh]">
               {artists.map((artist) => (
                 <div key={artist.artistID}>
                   {artist.artistSong.length > 0 && (
@@ -136,11 +157,11 @@ function App() {
                 <div className="w-full bg-white flex items-center px-4 py-2">
                   <div className="w-1/12 text-left font-bold">#</div>
                   <div className="w-5/12 text-left font-bold">Name</div>
-                  <div className="w-4/12 text-left font-bold">Album</div>
+                  <div className="w-4/12 text-left font-bold">Artist</div>
                   <div className="w-2/12 text-right font-bold">Rank</div>
                 </div>
 
-                <div className="bg-violet space-y-4 overflow-y-auto max-h-[400px]">
+                <div className="bg-violet space-y-4 overflow-y-auto max-h-[600px]">
                   {(searchResults.length > 0 ? searchResults : selectedArtistSongs.length > 0 ? selectedArtistSongs : songs).map(
                     (song, index) => (
                       <div
@@ -159,11 +180,11 @@ function App() {
                               {song.song}
                             </div>
                             <div className="text-sm text-gray-500">
-                              {song.artist}
+                              
                             </div>
                           </div>
                         </div>
-                        <div className="w-4/12">{song.song}</div>
+                        <div className="w-4/12">{song.artist}</div>
                         <div className="w-2/12 text-right">{song.rank}</div>
                       </div>
                     )

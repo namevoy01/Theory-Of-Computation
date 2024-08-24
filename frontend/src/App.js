@@ -41,15 +41,17 @@ function App() {
 
   // Function to handle artist click
   const handleArtistClick = (artistName) => {
-    fetch(`http://localhost:8000/get_artist/${encodeURIComponent(artistName)}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const artistSongs = Array.isArray(data.artistSong) ? data.artistSong : [];
-        setSelectedArtistSongs(
-          artistSongs.map(song => ({ ...song, artist: artistName })) // Add artist name to each song
-        );
-      })
-      .catch((error) => console.error("Error:", error));
+    if (!searchKeyword.trim()) { // Only allow click if not searching
+      fetch(`http://localhost:8000/get_artist/${encodeURIComponent(artistName)}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const artistSongs = Array.isArray(data.artistSong) ? data.artistSong : [];
+          setSelectedArtistSongs(
+            artistSongs.map(song => ({ ...song, artist: artistName })) // Add artist name to each song
+          );
+        })
+        .catch((error) => console.error("Error:", error));
+    }
   };
 
   // Function to handle CSV download
@@ -124,7 +126,10 @@ function App() {
                   {artist.artistSong.length > 0 && (
                     <button
                       onClick={() => handleArtistClick(artist.artistName)}
-                      className="flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white hover:border-gray-400 focus:outline-none w-full h-24"
+                      disabled={searchKeyword.trim() !== ""} // Disable button when searching
+                      className={`flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-white ${
+                        searchKeyword.trim() !== "" ? 'cursor-not-allowed opacity-50' : 'hover:border-gray-400'
+                      } focus:outline-none w-full h-24`}
                     >
                       <img
                         src={artist.artistImg}

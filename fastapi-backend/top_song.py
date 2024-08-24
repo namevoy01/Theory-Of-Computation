@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import random
 
 ########## SCAP WEB ########## 
 
@@ -64,6 +65,7 @@ def All_Artist():
             artist_data[artist_name] = {
                 'artistID': artist_id,
                 'artistName': artist_name,
+                'artistImg' : '',
                 'artistSong': []
             }
             artist_id += 1
@@ -74,6 +76,11 @@ def All_Artist():
             'img': song['img'],
             'rank': song['rank']
         })
+
+        for artist_name, artist_info in artist_data.items():
+            artist_songs = artist_info['artistSong']
+            random_song = random.choice(artist_songs)
+            artist_info['artistImg'] = random_song['img']
 
     return list(artist_data.values())
 
@@ -117,6 +124,6 @@ def search_songs_by_keyword(keyword):
     return search_results
 
 # print(All_Songs())
-# print(All_Artist())
+print(All_Artist())
 # print(search_songs_by_artist("Taylor Swift"))
 # print(search_songs_by_keyword('billie'))

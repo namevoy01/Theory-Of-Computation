@@ -78,12 +78,14 @@ def All_Artist():
             'rank': song['rank']
         })
 
-        for artist_name, artist_info in artist_data.items():
-            artist_songs = artist_info['artistSong']
-            random_song = random.choice(artist_songs)
-            artist_info['artistImg'] = random_song['img']
+    for artist_name, artist_info in artist_data.items():
+        artist_songs = artist_info['artistSong']
+        random_song = random.choice(artist_songs)
+        artist_info['artistImg'] = random_song['img']
 
-    return list(artist_data.values())
+    artist_data = sorted(artist_data.values(), key=lambda x: x['artistName'])
+
+    return artist_data
 
 def search_songs_by_artist(artist_name):
     allSong = All_Songs()

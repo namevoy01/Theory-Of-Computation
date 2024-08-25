@@ -98,8 +98,9 @@ def search_songs_by_artist(artist_name):
     artist_id = 1
     artist_found = False
     for song in allSong:
-        artist_name = song['artist'].replace('-', '/')
-        
+        if '-' in artist_name:
+            artist_name = artist_name.replace('-', '/')
+
         if song['artist'] == artist_name:
             if not artist_found:
                 artist_songs['artistID'] = artist_id
@@ -147,5 +148,5 @@ def export_to_csv(filename):
 # export_to_csv('top_songs.csv')
 # print(All_Songs())
 # print(All_Artist())
-print(search_songs_by_artist("AC/DC"))
+# print(search_songs_by_artist("AC/DC"))
 # print(search_songs_by_keyword('billie'))

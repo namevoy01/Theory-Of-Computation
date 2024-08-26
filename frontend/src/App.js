@@ -52,19 +52,35 @@ function App() {
   };
 
   // Function to handle artist click
+  // const handleArtistClick = (artistName) => {
+  //   if (!searchKeyword.trim()) { // Only allow click if not searching
+  //     fetch(`http://localhost:8000/get_artist/${encodeURIComponent(artistName)}`)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         const artistSongs = Array.isArray(data.artistSong) ? data.artistSong : [];
+  //         setSelectedArtistSongs(
+  //           artistSongs.map(song => ({ ...song, artist: artistName })) // Add artist name to each song
+  //         );
+  //       })
+  //       .catch((error) => console.error("Error:", error));
+  //   }
+  // };
+
   const handleArtistClick = (artistName) => {
     if (!searchKeyword.trim()) { // Only allow click if not searching
-      fetch(`http://localhost:8000/get_artist/${encodeURIComponent(artistName)}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const artistSongs = Array.isArray(data.artistSong) ? data.artistSong : [];
-          setSelectedArtistSongs(
-            artistSongs.map(song => ({ ...song, artist: artistName })) // Add artist name to each song
-          );
-        })
-        .catch((error) => console.error("Error:", error));
+        // Replace slashes with dashes in artist name
+        const formattedArtistName = artistName.replace(/\//g, '-');
+        fetch(`http://localhost:8000/get_artist/${encodeURIComponent(formattedArtistName)}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const artistSongs = Array.isArray(data.artistSong) ? data.artistSong : [];
+                setSelectedArtistSongs(
+                    artistSongs.map(song => ({ ...song, artist: artistName })) // Add artist name to each song
+                );
+            })
+            .catch((error) => console.error("Error:", error));
     }
-  };
+};
 
   // Function to handle CSV download
   const handleCsvDownload = () => {

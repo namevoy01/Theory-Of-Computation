@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 const imageUrls = [
-  "https://i.gifer.com/Z5aE.gif",
-  "https://i.gifer.com/AcU9.gif",
-  "https://i.gifer.com/QHC.gif",
+  "https://i.gifer.com/Sr86.gif",
+  "https://i.gifer.com/Erie.gif",
+  "https://i.gifer.com/g10h.gif",
   // เพิ่ม URL ของรูปภาพเพิ่มเติมที่นี่
 ];
 
@@ -30,7 +30,7 @@ function App() {
     // Start image slideshow
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % imageUrls.length);
-    }, 3000); // เปลี่ยนภาพทุก 3 วินาที
+    }, 1000); // เปลี่ยนภาพทุก 1 วินาที
 
     // Clean up interval on component unmount
     return () => clearInterval(interval);
@@ -94,11 +94,11 @@ function App() {
         {/* Sidebar for Home and Search */}
         <div className="flex flex-col space-y-6 mb-8">
   {/* Container for Home and Search */}
-  <div className="bg-gray-200 p-4 overflow-y-auto rounded-lg">
+  <div className="bg-gray-200 p-4  overflow-y-auto rounded-lg ml-2  -mt-1 h-40">
     {/* Home Button */}
-    <div className="flex items-center space-x-2 mb-4">
+    <div className="flex items-center space-x-2 mb-6">
       <svg
-        className="w-6 h-6 text-gray-700"
+        className="w-6 h-6 text-black"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -113,7 +113,7 @@ function App() {
         ></path>
       </svg>
       <button
-        className="font-semibold text-lg text-gray-700"
+        className="font-semibold text-lg text-black"
         onClick={() => window.location.reload()}
       >
         Home
@@ -121,9 +121,9 @@ function App() {
     </div>
 
     {/* Search Input */}
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 mb-6 ">
       <svg
-        className="w-6 h-6 text-gray-700"
+        className="w-6 h-6 text-black"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -146,8 +146,8 @@ function App() {
 </div>
 
         {/* Sidebar for Artist */}
-        <div className="flex-1 bg-gray-200 p-4 overflow-y-auto rounded-lg">
-          <div className="flex items-center justify-between mb-4">
+        <div className="flex-1 bg-gray-200 p-4 overflow-y-auto rounded-lg ml-2 -mt-3">
+          <div className="flex items-center justify-between mb-3">
             <div className="text-black font-bold text-xl">Artist</div>
             <button
               className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black"
@@ -188,7 +188,7 @@ function App() {
       {/* Song List with Slideshow */}
       <div className="flex-1 bg-white p-4 lg:p-8 overflow-y-auto">
         {/* Slideshow */}
-        <div className="relative mb-4 lg:mb-8">
+        <div className="relative mb-4 lg:mb-8 -ml-6 -mt-5 -mr-2">
           <img
             src={imageUrls[currentImage]}
             alt="Slideshow"
@@ -196,7 +196,7 @@ function App() {
           />
         </div>
 
-        <div className="min-w-full bg-gray-200 p-4 rounded-lg shadow-md">
+        <div className="min-w-full bg-gray-200 p-4 rounded-lg shadow-md -ml-6 -mt-5 -mr-2">
           <div className="w-full  flex flex-col lg:flex-row px-4 py-2">
             <div className="w-full lg:w-1/12 text-left font-bold">#</div>
             <div className="w-full lg:w-5/12 text-left font-bold">Name</div>

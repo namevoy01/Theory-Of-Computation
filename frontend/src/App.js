@@ -136,7 +136,7 @@ function App() {
       </svg>
       <input
         type="text"
-        className="font-semibold border border-gray-700 text-lg text-gray-700 bg-white rounded py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="font-semibold border border-gray-700 text-lg text-gray-700 bg-white rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Search"
         value={searchKeyword}
         onChange={handleSearch}

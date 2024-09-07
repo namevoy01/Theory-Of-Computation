@@ -134,10 +134,13 @@ async def search_songs_by_artist(artist_name):
 
     return artist_songs
 
-async def search_songs_by_keyword(keyword):
+async def search_songs_by_keyword(keyword: str):
     data = await All_Songs()
-    search_results = []
 
+    if not keyword.strip():
+        return data
+
+    search_results = []
     for song_info in data:
         if keyword.lower() in song_info['artist'].lower() or keyword.lower() in song_info['song'].lower():
             search_results.append(song_info)

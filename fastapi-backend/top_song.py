@@ -135,10 +135,6 @@ async def search_songs_by_artist(artist_name):
 
 async def search_songs_by_keyword(keyword):
     data = await All_Songs()
-    current_data = data[:]
-
-    if not keyword.strip() or keyword == '':
-        return current_data
 
     search_results = []
     for song_info in data:

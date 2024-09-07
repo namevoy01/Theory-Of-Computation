@@ -1,32 +1,47 @@
-import requests
+import aiohttp
 from bs4 import BeautifulSoup
 import re
 import random
 import csv
+from datetime import datetime, timedelta
 
-########## SCAP WEB ########## 
+cache_expiration = timedelta(minutes=5)
+cache_data = None
+cache_timestamp = None
 
-def fetch_real_time_data():
-    r = requests.get('https://www.billboard.com/charts/billboard-200/')
-    soup = BeautifulSoup(r.content, 'html.parser')
+########## SCAP WEB ##########
+
+async def fetch_real_time_data():
+    global cache_data, cache_timestamp
     
-    pattern = re.compile(r'^c.*trucate')
+    if cache_data and cache_timestamp and datetime.now() - cache_timestamp < cache_expiration:
+        return cache_data
     
-    h3_list = soup.find_all('h3', class_=pattern) 
-    span_list = soup.find_all('span', class_=pattern)
-    img_list = soup.find_all('img', class_=re.compile(r'^c-lazy-image')) 
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://www.billboard.com/charts/billboard-200/') as response:
+            r = await response.text()
+            soup = BeautifulSoup(r, 'html.parser')
 
-    img_to_append = []
-    for img in img_list:
-        chart_img = re.findall(r'.*charts(?!.*344x344).*', img['data-lazy-src'])
-        if chart_img:
-            img_to_append.extend(chart_img)
-    img_to_append = img_to_append[1::]
-    
-    return h3_list, span_list, img_to_append
+            pattern = re.compile(r'^c.*trucate')
 
-def artist_song_image():
-    h3_list, span_list, img_to_append = fetch_real_time_data()
+            h3_list = soup.find_all('h3', class_=pattern) 
+            span_list = soup.find_all('span', class_=pattern)
+            img_list = soup.find_all('img', class_=re.compile(r'^c-lazy-image')) 
+
+            img_to_append = []
+            for img in img_list:
+                chart_img = re.findall(r'.*charts(?!.*344x344).*', img['data-lazy-src'])
+                if chart_img:
+                    img_to_append.extend(chart_img)
+            img_to_append = img_to_append[1::]
+
+            cache_data = (h3_list, span_list, img_to_append)
+            cache_timestamp = datetime.now()
+
+            return cache_data
+
+async def artist_song_image():
+    h3_list, span_list, img_to_append = await fetch_real_time_data()
     
     x = []
     for i in range(len(h3_list)):
@@ -38,8 +53,8 @@ def artist_song_image():
 
 ########## MANAGE DATA ##########
 
-def All_Songs():
-    data = artist_song_image()
+async def All_Songs():
+    data = await artist_song_image()
     allSong = []
     song_id = 1
 
@@ -57,8 +72,8 @@ def All_Songs():
 
     return allSong
 
-def All_Artist():
-    allSong = All_Songs()
+async def All_Artist():
+    allSong = await All_Songs()
     artist_data = {}
     
     artist_id = 1
@@ -89,8 +104,8 @@ def All_Artist():
 
     return artist_data
 
-def search_songs_by_artist(artist_name):
-    allSong = All_Songs()
+async def search_songs_by_artist(artist_name):
+    allSong = await All_Songs()
     
     artist_songs = {
         'artistID': None,
@@ -118,10 +133,10 @@ def search_songs_by_artist(artist_name):
 
     return artist_songs
 
-def search_songs_by_keyword(keyword):
-    data = All_Songs()
-    search_results = []
+async def search_songs_by_keyword(keyword):
+    data = await All_Songs()
 
+    search_results = []
     for song_info in data:
         if keyword.lower() in song_info['artist'].lower() or keyword.lower() in song_info['song'].lower():
             search_results.append(song_info)
@@ -131,10 +146,10 @@ def search_songs_by_keyword(keyword):
     
     return search_results
 
-def export_to_csv(filename):
-    data = All_Songs()
+async def export_to_csv(filename):
+    data = await All_Songs()
 
-    fieldnames = ['SongRank', 'SongName', 'ArtistName', 'SongImg']
+    fieldnames = ['Rank', 'SongName', 'ArtistName', 'SongImg']
 
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -142,14 +157,8 @@ def export_to_csv(filename):
 
         for song in data:
             writer.writerow({
-                'SongRank': song['rank'],
+                'Rank': song['rank'],
                 'SongName': song['song'],
                 'ArtistName': song['artist'],
                 'SongImg': song['img'],
             })
-
-# export_to_csv('top_songs.csv')
-# print(All_Songs())
-# print(All_Artist())
-# print(search_songs_by_artist("AC/DC"))
-# print(search_songs_by_keyword('billie'))

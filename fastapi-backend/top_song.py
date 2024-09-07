@@ -3,30 +3,23 @@ from bs4 import BeautifulSoup
 import re
 import random
 import csv
+import asyncio
 from datetime import datetime, timedelta
 
 cache_expiration = timedelta(minutes=5)
 cache_data = None
 cache_timestamp = None
-etag = None
-last_modified = None
 
 ########## SCAP WEB ##########
 
 async def fetch_real_time_data():
-    global cache_data, cache_timestamp, etag, last_modified
+    global cache_data, cache_timestamp
+    
+    if cache_data and cache_timestamp and datetime.now() - cache_timestamp < cache_expiration:
+        return cache_data
     
     async with aiohttp.ClientSession() as session:
-        headers = {}
-        if etag:
-            headers['If-None-Match'] = etag
-        if last_modified:
-            headers['If-Modified-Since'] = last_modified
-
-        async with session.get('https://www.billboard.com/charts/billboard-200/', headers=headers) as response:
-            if response.status == 304: 
-                return cache_data
-            
+        async with session.get('https://www.billboard.com/charts/billboard-200/') as response:
             r = await response.text()
             soup = BeautifulSoup(r, 'html.parser')
 
@@ -45,8 +38,6 @@ async def fetch_real_time_data():
 
             cache_data = (h3_list, span_list, img_to_append)
             cache_timestamp = datetime.now()
-            etag = response.headers.get('ETag')
-            last_modified = response.headers.get('Last-Modified')
 
             return cache_data
 
@@ -143,7 +134,7 @@ async def search_songs_by_artist(artist_name):
 
     return artist_songs
 
-async def search_songs_by_keyword(keyword: str):
+async def search_songs_by_keyword(keyword):
     data = await All_Songs()
 
     if not keyword.strip():
@@ -159,10 +150,10 @@ async def search_songs_by_keyword(keyword: str):
     
     return search_results
 
-async def export_to_csv(filename):
-    data = await All_Songs()
+def export_to_csv(filename):
+    data = asyncio.run(All_Songs())
 
-    fieldnames = ['Rank', 'SongName', 'ArtistName', 'SongImg']
+    fieldnames = ['SongRank', 'SongName', 'ArtistName', 'SongImg']
 
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -170,8 +161,15 @@ async def export_to_csv(filename):
 
         for song in data:
             writer.writerow({
-                'Rank': song['rank'],
+                'SongRank': song['rank'],
                 'SongName': song['song'],
                 'ArtistName': song['artist'],
                 'SongImg': song['img'],
             })
+
+
+# export_to_csv('top_songs.csv')
+# print(All_Songs())
+# print(All_Artist())
+# print(search_songs_by_artist("AC/DC"))
+# print(search_songs_by_keyword('billie'))

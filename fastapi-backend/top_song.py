@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import re
 import random
 import csv
-import asyncio
 from datetime import datetime, timedelta
 
 cache_expiration = timedelta(minutes=5)
@@ -137,7 +136,7 @@ async def search_songs_by_artist(artist_name):
 async def search_songs_by_keyword(keyword):
     data = await All_Songs()
 
-    if not keyword.strip():
+    if not keyword.strip() or keyword == '':
         return data
 
     search_results = []
@@ -150,10 +149,10 @@ async def search_songs_by_keyword(keyword):
     
     return search_results
 
-def export_to_csv(filename):
-    data = asyncio.run(All_Songs())
+async def export_to_csv(filename):
+    data = await All_Songs()
 
-    fieldnames = ['SongRank', 'SongName', 'ArtistName', 'SongImg']
+    fieldnames = ['Rank', 'SongName', 'ArtistName', 'SongImg']
 
     with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -161,15 +160,8 @@ def export_to_csv(filename):
 
         for song in data:
             writer.writerow({
-                'SongRank': song['rank'],
+                'Rank': song['rank'],
                 'SongName': song['song'],
                 'ArtistName': song['artist'],
                 'SongImg': song['img'],
             })
-
-
-# export_to_csv('top_songs.csv')
-# print(All_Songs())
-# print(All_Artist())
-# print(search_songs_by_artist("AC/DC"))
-# print(search_songs_by_keyword('billie'))

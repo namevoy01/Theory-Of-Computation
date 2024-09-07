@@ -34,5 +34,5 @@ async def search_songs(keyword: str):
 @app.get("/export_to_csv")
 async def get_csv():
     filename = 'top_songs.csv'
-    export_to_csv(filename)
+    await export_to_csv(filename)
     return FileResponse(filename, media_type='text/csv', filename=filename)

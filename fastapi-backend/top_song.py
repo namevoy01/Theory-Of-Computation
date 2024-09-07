@@ -1,14 +1,23 @@
 import aiohttp
 from bs4 import BeautifulSoup
 import re
-from functools import lru_cache
 import random
 import csv
+import asyncio
+from datetime import datetime, timedelta
 
-########## SCAP WEB ########## 
+cache_expiration = timedelta(minutes=5)
+cache_data = None
+cache_timestamp = None
 
-@lru_cache(maxsize=1)
+########## SCAP WEB ##########
+
 async def fetch_real_time_data():
+    global cache_data, cache_timestamp
+    
+    if cache_data and cache_timestamp and datetime.now() - cache_timestamp < cache_expiration:
+        return cache_data
+    
     async with aiohttp.ClientSession() as session:
         async with session.get('https://www.billboard.com/charts/billboard-200/') as response:
             r = await response.text()
@@ -27,7 +36,10 @@ async def fetch_real_time_data():
                     img_to_append.extend(chart_img)
             img_to_append = img_to_append[1::]
 
-            return h3_list, span_list, img_to_append
+            cache_data = (h3_list, span_list, img_to_append)
+            cache_timestamp = datetime.now()
+
+            return cache_data
 
 async def artist_song_image():
     h3_list, span_list, img_to_append = await fetch_real_time_data()
@@ -151,6 +163,7 @@ def export_to_csv(filename):
                 'ArtistName': song['artist'],
                 'SongImg': song['img'],
             })
+
 
 # export_to_csv('top_songs.csv')
 # print(All_Songs())

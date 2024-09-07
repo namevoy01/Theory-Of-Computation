@@ -19,10 +19,10 @@ function App() {
   useEffect(() => {
     // Fetch both APIs initially
     Promise.all([
-      fetch("http://localhost:8000/get_all_song").then((response) =>
+      fetch("https://theory-of-computation.onrender.com/get_all_song").then((response) =>
         response.json()
       ),
-      fetch("http://localhost:8000/get_all_artist").then((response) =>
+      fetch("https://theory-of-computation.onrender.com/get_all_artist").then((response) =>
         response.json()
       ),
     ])
@@ -47,7 +47,7 @@ function App() {
     setSearchKeyword(keyword);
 
     if (keyword.trim()) {
-      fetch(`http://localhost:8000/search_songs?keyword=${keyword}`)
+      fetch(`https://theory-of-computation.onrender.com/search_songs?keyword=${keyword}`)
         .then((response) => response.json())
         .then((data) => setSearchResults(Array.isArray(data) ? data : []))
         .catch((error) => console.error("Error:", error));
@@ -61,7 +61,7 @@ function App() {
       // Only allow click if not searching
       const formattedArtistName = artistName.replace(/\//g, "-");
       fetch(
-        `http://localhost:8000/get_artist/${encodeURIComponent(
+        `https://theory-of-computation.onrender.com/get_artist/${encodeURIComponent(
           formattedArtistName
         )}`
       )

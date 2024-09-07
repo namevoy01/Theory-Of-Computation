@@ -15,23 +15,23 @@ app.add_middleware(
 )
 
 @app.get("/get_all_song")
-def get_all_song():
-    return All_Songs()
+async def get_all_song():
+    return await All_Songs()
 
 @app.get("/get_all_artist")
-def get_all_artist():
-    return All_Artist()
+async def get_all_artist():
+    return await All_Artist()
 
 @app.get("/get_artist/{artist_name}")
-def get_artist_songs(artist_name: str):
-    return search_songs_by_artist(artist_name)
+async def get_artist_songs(artist_name: str):
+    return await search_songs_by_artist(artist_name)
 
 @app.get("/search_songs")
-def search_songs(keyword: str):
-    return search_songs_by_keyword(keyword)
+async def search_songs(keyword: str):
+    return await search_songs_by_keyword(keyword)
 
 @app.get("/export_to_csv")
-def get_csv():
+async def get_csv():
     filename = 'top_songs.csv'
     export_to_csv(filename)
     return FileResponse(filename, media_type='text/csv', filename=filename)

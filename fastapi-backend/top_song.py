@@ -1,9 +1,9 @@
 import aiohttp
 from bs4 import BeautifulSoup
 import re
+from functools import lru_cache
 import random
 import csv
-from functools import lru_cache
 
 ########## SCAP WEB ########## 
 
@@ -84,12 +84,14 @@ async def All_Artist():
             'rank': song['rank']
         })
 
-        for artist_name, artist_info in artist_data.items():
-            artist_songs = artist_info['artistSong']
-            random_song = random.choice(artist_songs)
-            artist_info['artistImg'] = random_song['img']
+    for artist_name, artist_info in artist_data.items():
+        artist_songs = artist_info['artistSong']
+        random_song = random.choice(artist_songs)
+        artist_info['artistImg'] = random_song['img']
 
-    return list(artist_data.values())
+    artist_data = sorted(artist_data.values(), key=lambda x: x['artistName'])
+
+    return artist_data
 
 async def search_songs_by_artist(artist_name):
     allSong = await All_Songs()
@@ -103,6 +105,9 @@ async def search_songs_by_artist(artist_name):
     artist_id = 1
     artist_found = False
     for song in allSong:
+        if '-' in artist_name:
+            artist_name = artist_name.replace('-', '/')
+
         if song['artist'] == artist_name:
             if not artist_found:
                 artist_songs['artistID'] = artist_id
@@ -150,5 +155,5 @@ def export_to_csv(filename):
 # export_to_csv('top_songs.csv')
 # print(All_Songs())
 # print(All_Artist())
-# print(search_songs_by_artist("Taylor Swift"))
+# print(search_songs_by_artist("AC/DC"))
 # print(search_songs_by_keyword('billie'))

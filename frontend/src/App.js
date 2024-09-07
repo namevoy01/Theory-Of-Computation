@@ -19,10 +19,10 @@ function App() {
   useEffect(() => {
     // Fetch both APIs initially
     Promise.all([
-      fetch("https://theory-of-computation.onrender.com/get_all_song").then((response) =>
+      fetch("https://test-topsong.onrender.com/get_all_song").then((response) =>
         response.json()
       ),
-      fetch("https://theory-of-computation.onrender.com/get_all_artist").then((response) =>
+      fetch("https://test-topsong.onrender.com/get_all_artist").then((response) =>
         response.json()
       ),
     ])
@@ -47,7 +47,7 @@ function App() {
     setSearchKeyword(keyword);
 
     if (keyword.trim()) {
-      fetch(`https://theory-of-computation.onrender.com/search_songs?keyword=${keyword}`)
+      fetch(`https://test-topsong.onrender.com/search_songs?keyword=${keyword}`)
         .then((response) => response.json())
         .then((data) => setSearchResults(Array.isArray(data) ? data : []))
         .catch((error) => console.error("Error:", error));
@@ -61,7 +61,7 @@ function App() {
       // Only allow click if not searching
       const formattedArtistName = artistName.replace(/\//g, "-");
       fetch(
-        `https://theory-of-computation.onrender.com/get_artist/${encodeURIComponent(
+        `https://test-topsong.onrender.com/get_artist/${encodeURIComponent(
           formattedArtistName
         )}`
       )
@@ -80,7 +80,7 @@ function App() {
 
   // Function to handle CSV download
   const handleCsvDownload = () => {
-    window.location.href = "https://theory-of-computation.onrender.com/export_to_csv";
+    window.location.href = "https://test-topsong.onrender.com/export_to_csv";
   };
 
   // Toggle dropdown visibility

@@ -24,15 +24,15 @@ async def get_all_artist():
     return await All_Artist()
 
 @app.get("/get_artist/{artist_name}")
-async def get_artist_songs(artist_name: str):
+async def get_artist_songs(artist_name: str, ):
     return await search_songs_by_artist(artist_name)
 
 @app.get("/search_songs")
-async def search_songs(keyword: str):
+async def search_songs(keyword: str, ):
     return await search_songs_by_keyword(keyword)
 
 @app.get("/export_to_csv")
 async def get_csv():
     filename = 'top_songs.csv'
-    export_to_csv(filename)
+    await export_to_csv(filename)
     return FileResponse(filename, media_type='text/csv', filename=filename)

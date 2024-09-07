@@ -1,30 +1,37 @@
-import requests
+import aiohttp
 from bs4 import BeautifulSoup
 import re
 import random
+import csv
+from functools import lru_cache
 
 ########## SCAP WEB ########## 
 
-r = requests.get('https://www.billboard.com/charts/billboard-200/')
-soup = BeautifulSoup(r.content, 'html.parser')
+@lru_cache(maxsize=1)
+async def fetch_real_time_data():
+    async with aiohttp.ClientSession() as session:
+        async with session.get('https://www.billboard.com/charts/billboard-200/') as response:
+            r = await response.text()
+            soup = BeautifulSoup(r, 'html.parser')
 
-pattern = re.compile(r'^c.*trucate')
+            pattern = re.compile(r'^c.*trucate')
 
-h3_list = soup.find_all('h3', class_=pattern)
+            h3_list = soup.find_all('h3', class_=pattern) 
+            span_list = soup.find_all('span', class_=pattern)
+            img_list = soup.find_all('img', class_=re.compile(r'^c-lazy-image')) 
 
-span_list = soup.find_all('span', class_=pattern)
+            img_to_append = []
+            for img in img_list:
+                chart_img = re.findall(r'.*charts(?!.*344x344).*', img['data-lazy-src'])
+                if chart_img:
+                    img_to_append.extend(chart_img)
+            img_to_append = img_to_append[1::]
 
-img_list = soup.find_all('img', class_=re.compile(r'^c-lazy-image'))
+            return h3_list, span_list, img_to_append
 
-img_to_append = []
-for img in img_list:
-    chart_img = re.findall(r'.*charts(?!.*344x344).*', img['data-lazy-src'])
-    if chart_img:
-        img_to_append.extend(chart_img)
-img_to_append = img_to_append[1::]
-
-
-def artist_song_image():
+async def artist_song_image():
+    h3_list, span_list, img_to_append = await fetch_real_time_data()
+    
     x = []
     for i in range(len(h3_list)):
         x.append({'Artist' : span_list[i].string.strip(),
@@ -35,8 +42,8 @@ def artist_song_image():
 
 ########## MANAGE DATA ##########
 
-def All_Songs():
-    data = artist_song_image()
+async def All_Songs():
+    data = await artist_song_image()
     allSong = []
     song_id = 1
 
@@ -54,8 +61,8 @@ def All_Songs():
 
     return allSong
 
-def All_Artist():
-    allSong = All_Songs()
+async def All_Artist():
+    allSong = await All_Songs()
     artist_data = {}
     
     artist_id = 1
@@ -84,9 +91,9 @@ def All_Artist():
 
     return list(artist_data.values())
 
-def search_songs_by_artist(artist_name):
-    allSong = All_Songs()
-
+async def search_songs_by_artist(artist_name):
+    allSong = await All_Songs()
+    
     artist_songs = {
         'artistID': None,
         'artistName': artist_name,
@@ -110,8 +117,8 @@ def search_songs_by_artist(artist_name):
 
     return artist_songs
 
-def search_songs_by_keyword(keyword):
-    data = All_Songs()
+async def search_songs_by_keyword(keyword):
+    data = await All_Songs()
     search_results = []
 
     for song_info in data:
@@ -123,6 +130,24 @@ def search_songs_by_keyword(keyword):
     
     return search_results
 
+def export_to_csv(filename):
+    data = asyncio.run(All_Songs())
+
+    fieldnames = ['SongRank', 'SongName', 'ArtistName', 'SongImg']
+
+    with open(filename, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+
+        for song in data:
+            writer.writerow({
+                'SongRank': song['rank'],
+                'SongName': song['song'],
+                'ArtistName': song['artist'],
+                'SongImg': song['img'],
+            })
+
+# export_to_csv('top_songs.csv')
 # print(All_Songs())
 # print(All_Artist())
 # print(search_songs_by_artist("Taylor Swift"))

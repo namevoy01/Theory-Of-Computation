@@ -63,24 +63,31 @@ function App() {
 
   const handleArtistClick = (artistName) => {
     if (!searchKeyword.trim()) {
-      const formattedArtistName = artistName.replace(/\//g, "-");
-      fetch(
-        `https://theory-of-computation.onrender.com/get_artist/${encodeURIComponent(
-          formattedArtistName
-        )}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          const artistSongs = Array.isArray(data.artistSong)
-            ? data.artistSong
-            : [];
-          setSelectedArtistSongs(
-            artistSongs.map((song) => ({ ...song, artist: artistName }))
-          );
-        })
-        .catch((error) => console.error("Error:", error));
+      if (artistName === "T-Pain") {
+        // หากเป็น T-Pain ให้แสดงเพลงทั้งหมด
+        setSelectedArtistSongs(songs.filter((song) => song.artist === "T-Pain"));
+      } else {
+        const formattedArtistName = artistName.replace(/\//g, "-");
+        fetch(
+          `https://theory-of-computation.onrender.com/get_artist/${encodeURIComponent(
+            formattedArtistName
+          )}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data); // แสดงข้อมูลที่ได้รับจาก API
+            const artistSongs = Array.isArray(data.artistSong)
+              ? data.artistSong
+              : [];
+            setSelectedArtistSongs(
+              artistSongs.map((song) => ({ ...song, artist: artistName }))
+            );
+          })
+          .catch((error) => console.error("Error:", error));
+      }
     }
   };
+  
 
   const handleCsvDownload = () => {
     window.location.href =

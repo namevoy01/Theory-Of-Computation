@@ -80,7 +80,7 @@ function App() {
 
   // Function to handle CSV download
   const handleCsvDownload = () => {
-    window.location.href = "http://127.0.0.1:8000/export_to_csv";
+    window.location.href = "https://theory-of-computation.onrender.com/export_to_csv";
   };
 
   // Toggle dropdown visibility

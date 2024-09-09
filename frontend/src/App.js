@@ -41,7 +41,7 @@ function App() {
 
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % imageUrls.length);
-    }, 3000); // เพิ่มเวลาในการเปลี่ยนภาพเป็น 3 วินาที
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -260,15 +260,13 @@ function App() {
               {displayedSongs.map((song, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-12 items-center border-b bg-violet-100 px-4 py-2 shadow-xl rounded-xl"
-                >
+                  className="grid grid-cols-12 items-center border-b bg-violet-100 px-4 py-2 shadow-xl rounded-xl">
                   <div className="col-span-1 text-left">{index + 1}</div>
                   <div className="col-span-5 flex items-center space-x-2">
                     <img
                       src={song.img}
                       alt={song.song}
-                      className="rounded-lg w-16 h-16 lg:w-20 lg:h-20 object-cover"
-                    />
+                      className="rounded-lg w-16 h-16 lg:w-20 lg:h-20 object-cover"/>
                     <div className="font-bold text-gray-700 truncate">{song.song}</div>
                   </div>
                   <div className="col-span-5 text-left truncate">{song.artist}</div>

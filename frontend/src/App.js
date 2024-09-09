@@ -40,7 +40,7 @@ function App() {
 
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % imageUrls.length);
-    }, 1000);
+    }, 3000); // เพิ่มเวลาในการเปลี่ยนภาพเป็น 3 วินาที
 
     return () => clearInterval(interval);
   }, []);
@@ -64,7 +64,6 @@ function App() {
   const handleArtistClick = (artistName) => {
     if (!searchKeyword.trim()) {
       if (artistName === "T-Pain") {
-        // หากเป็น T-Pain ให้แสดงเพลงทั้งหมด
         setSelectedArtistSongs(songs.filter((song) => song.artist === "T-Pain"));
       } else {
         const formattedArtistName = artistName.replace(/\//g, "-");
@@ -75,7 +74,7 @@ function App() {
         )
           .then((response) => response.json())
           .then((data) => {
-            console.log(data); // แสดงข้อมูลที่ได้รับจาก API
+            console.log(data);
             const artistSongs = Array.isArray(data.artistSong)
               ? data.artistSong
               : [];
@@ -87,7 +86,6 @@ function App() {
       }
     }
   };
-  
 
   const handleCsvDownload = () => {
     window.location.href =
@@ -219,9 +217,9 @@ function App() {
                       <img
                         src={artist.artistImg}
                         alt={artist.artistName}
-                        className="rounded-lg w-20 h-20"
+                        className="rounded-lg w-20 h-20 object-cover"
                       />
-                      <div className="font-bold text-gray-700 text-base text-left">
+                      <div className="font-bold text-gray-700 text-base text-left truncate">
                         {artist.artistName}
                       </div>
                     </button>
@@ -236,7 +234,7 @@ function App() {
       {/* Song List with Slideshow */}
       <div className="flex-1 bg-white p-4 lg:p-8 overflow-y-auto">
         {/* Slideshow */}
-        <div className="relative mb-4 lg:mb-8 -ml-6 -mt-5 -mr-2">
+        <div className="relative mb-4 lg:mb-8">
           <img
             src={imageUrls[currentImage]}
             alt="Slideshow"
@@ -245,7 +243,7 @@ function App() {
         </div>
 
         {/* Songs List */}
-        <div className="min-w-full bg-gray-200 p-4 rounded-lg shadow-md -ml-6 -mt-5 -mr-2">
+        <div className="min-w-full bg-gray-200 p-4 rounded-lg shadow-md">
           <div className="w-full flex flex-col lg:flex-row px-4 py-2">
             {/* Header */}
             <div className="w-full lg:w-1/12 text-left font-bold">#</div>
@@ -255,6 +253,8 @@ function App() {
           </div>
           {isLoadingSongs ? (
             <div className="text-center font-bold">Loading Songs...</div>
+          ) : displayedSongs.length === 0 ? (
+            <div className="text-center font-bold">Not found</div>
           ) : (
             <div className="space-y-4">
               {displayedSongs.map((song, index) => (
@@ -267,11 +267,11 @@ function App() {
                     <img
                       src={song.img}
                       alt={song.song}
-                      className="rounded-lg w-16 h-16 lg:w-20 lg:h-20"
+                      className="rounded-lg w-16 h-16 lg:w-20 lg:h-20 object-cover"
                     />
-                    <div className="font-bold text-gray-700">{song.song}</div>
+                    <div className="font-bold text-gray-700 truncate">{song.song}</div>
                   </div>
-                  <div className="w-4/12 text-left">{song.artist}</div>
+                  <div className="w-4/12 text-left truncate">{song.artist}</div>
                   <div className="w-2/12 text-right">{song.rank}</div>
                 </div>
               ))}

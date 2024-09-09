@@ -17,6 +17,7 @@ function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLoadingArtists, setIsLoadingArtists] = useState(true);
   const [isLoadingSongs, setIsLoadingSongs] = useState(true);
+  const [showArtistList, setShowArtistList] = useState(false); // เพิ่ม state นี้
 
   useEffect(() => {
     setIsLoadingArtists(true);
@@ -81,6 +82,7 @@ function App() {
             setSelectedArtistSongs(
               artistSongs.map((song) => ({ ...song, artist: artistName }))
             );
+            setShowArtistList(false); // ซ่อนรายชื่อศิลปินหลังจากเลือก
           })
           .catch((error) => console.error("Error:", error));
       }
@@ -107,7 +109,7 @@ function App() {
       {/* Sidebar */}
       <div className="lg:w-1/4 bg-white p-4 flex flex-col overflow-hidden">
         {/* Sidebar for Home and Search */}
-        <div className="flex flex-col space-y-6 mb-8 overflow-hidden">
+        <div className="flex flex-col space-y-6 mb-8 ">
           <div className="bg-gray-200 p-4 rounded-lg ml-2 -mt-1 h-40 overflow-auto">
             {/* Home Button */}
             <div className="flex items-center space-x-2 mb-6">
@@ -182,19 +184,18 @@ function App() {
             </button>
           </div>
           {/* Dropdown Toggle Button for Small Screens */}
-          <div className="lg:hidden sticky top-0 z-10 bg-gray-200">
+          <div className="lg:hidden bg-gray-200">
             <button
               className="w-full bg-gray-700 text-white p-2 rounded-lg mb-2"
-              onClick={toggleDropdown}
+              onClick={() => setShowArtistList((prev) => !prev)}
             >
-              {isDropdownOpen ? "Hide Artists" : "Show Artists"}
+              {showArtistList ? "Hide Artists" : "Show Artists"}
             </button>
           </div>
           {/* Artist Cards with scrollable container */}
           <div
             className={`flex-1 overflow-y-auto ${
-              isDropdownOpen ||
-              !window.matchMedia("(max-width: 1024px)").matches
+              showArtistList || !window.matchMedia("(max-width: 1024px)").matches
                 ? "block"
                 : "hidden"
             } lg:block`}
@@ -271,7 +272,7 @@ function App() {
                     <div className="font-bold text-gray-700 truncate">{song.song}</div>
                   </div>
                   <div className="col-span-5 text-left truncate">{song.artist}</div>
-                  <div className="text-left">{song.rank}</div> {/* ปรับขนาดให้ตรง */}
+                  <div className="text-left">{song.rank}</div>
                 </div>
               ))}
             </div>

@@ -244,12 +244,11 @@ function App() {
 
         {/* Songs List */}
         <div className="min-w-full bg-gray-200 p-4 rounded-lg shadow-md">
-          <div className="w-full flex flex-col lg:flex-row px-4 py-2">
-            {/* Header */}
-            <div className="w-full lg:w-1/12 text-left font-bold">#</div>
-            <div className="w-full lg:w-5/12 text-left font-bold">Name</div>
-            <div className="w-full lg:w-4/12 text-left font-bold">Artist</div>
-            <div className="w-full lg:w-2/12 text-right font-bold">Rank</div>
+          <div className="grid grid-cols-12 items-center mb-4 font-bold text-black text-lg bg-gray-200 p-4 rounded-lg">
+            <span className="col-span-1">#</span>
+            <span className="col-span-5">Name</span>
+            <span className="col-span-5">Artist</span>
+            <span className="">Rank</span>
           </div>
           {isLoadingSongs ? (
             <div className="text-center font-bold">Loading Songs...</div>
@@ -260,10 +259,10 @@ function App() {
               {displayedSongs.map((song, index) => (
                 <div
                   key={index}
-                  className="border-b bg-violet-100 flex items-center px-4 py-2 shadow-xl rounded-xl"
+                  className="grid grid-cols-12 items-center border-b bg-violet-100 px-4 py-2 shadow-xl rounded-xl"
                 >
-                  <div className="w-1/12 text-left">{index + 1}</div>
-                  <div className="w-5/12 flex items-center space-x-2">
+                  <div className="col-span-1 text-left">{index + 1}</div>
+                  <div className="col-span-5 flex items-center space-x-2">
                     <img
                       src={song.img}
                       alt={song.song}
@@ -271,8 +270,8 @@ function App() {
                     />
                     <div className="font-bold text-gray-700 truncate">{song.song}</div>
                   </div>
-                  <div className="w-4/12 text-left truncate">{song.artist}</div>
-                  <div className="w-2/12 text-right">{song.rank}</div>
+                  <div className="col-span-5 text-left truncate">{song.artist}</div>
+                  <div className="text-left">{song.rank}</div> {/* ปรับขนาดให้ตรง */}
                 </div>
               ))}
             </div>

@@ -94,6 +94,11 @@ function App() {
       "https://theory-of-computation.onrender.com/export_to_csv";
   };
 
+
+  const handleGithub = () => {
+    window.location.href = "https://github.com/namevoy01/Theory-Of-Computation?fbclid=IwY2xjawFrrBNleHRuA2FlbQIxMAABHW26uadql80-qNBO-zonWW7sTa4m45ZvbOVioVPnGBGCIwhRDMmDYpWc5w_aem_E2bX-jRn4nRI6n3EgzNN8w"
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
@@ -101,8 +106,8 @@ function App() {
   const displayedSongs = searchKeyword.trim()
     ? searchResults
     : selectedArtistSongs.length
-    ? selectedArtistSongs
-    : songs;
+      ? selectedArtistSongs
+      : songs;
 
   return (
     <div className="flex flex-col lg:flex-row h-screen overflow-hidden">
@@ -167,8 +172,18 @@ function App() {
         <div className="flex-1 bg-gray-200 p-4 rounded-lg ml-2 -mt-3 lg:overflow-y-auto max-h-[calc(100vh-200px)] overflow-y-auto sticky top-0 bg-gray-200">
           <div className="flex items-center justify-between mb-3">
             <div className="text-black font-bold text-xl">Artist</div>
+
+
+            <div className="flex space-x-2"></div>
             <button
-              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black"
+              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -mr-10 "
+              onClick={handleGithub}
+            >
+              GitHub
+            </button>
+
+            <button
+              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -ml-20 "
               onClick={handleCsvDownload}
             >
               <svg
@@ -198,11 +213,10 @@ function App() {
           </div>
           {/* Artist Cards with scrollable container */}
           <div
-            className={`flex-1 overflow-y-auto ${
-              showArtistList || !window.matchMedia("(max-width: 1024px)").matches
+            className={`flex-1 overflow-y-auto ${showArtistList || !window.matchMedia("(max-width: 1024px)").matches
                 ? "block"
                 : "hidden"
-            } lg:block`}
+              } lg:block`}
           >
             {isLoadingArtists ? (
               <div className="text-center font-bold">Loading Artists...</div>
@@ -213,11 +227,10 @@ function App() {
                     <button
                       onClick={() => handleArtistClick(artist.artistName)}
                       disabled={searchKeyword.trim() !== ""}
-                      className={`flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-gray ${
-                        searchKeyword.trim() !== ""
+                      className={`flex items-center space-x-4 rounded-lg p-4 border-solid border-2 border-gray ${searchKeyword.trim() !== ""
                           ? "cursor-not-allowed opacity-50"
                           : "hover:border-gray-400"
-                      } focus:outline-none w-full h-24`}
+                        } focus:outline-none w-full h-24`}
                     >
                       <img
                         src={artist.artistImg}
@@ -270,7 +283,7 @@ function App() {
                     <img
                       src={song.img}
                       alt={song.song}
-                      className="rounded-lg w-16 h-16 lg:w-20 lg:h-20 object-cover"/>
+                      className="rounded-lg w-16 h-16 lg:w-20 lg:h-20 object-cover" />
                     <div className="font-bold text-gray-700 truncate">{song.song}</div>
                   </div>
                   <div className="col-span-5 text-left truncate">{song.artist}</div>

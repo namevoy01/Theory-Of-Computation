@@ -176,14 +176,14 @@ function App() {
 
             <div className="flex space-x-2"></div>
             <button
-              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -mr-10 "
+              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -mr-2 "
               onClick={handleGithub}
             >
               GitHub
             </button>
 
             <button
-              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -ml-20 "
+              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -ml-5 "
               onClick={handleCsvDownload}
             >
               <svg

@@ -183,7 +183,7 @@ function App() {
             </button>
 
             <button
-              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -ml-5 "
+              className="bg-gray-900 text-white rounded-lg p-2 focus:outline-none hover:bg-violet-300 hover:text-black -ml-12 "
               onClick={handleCsvDownload}
             >
               <svg

@@ -6,7 +6,7 @@ from typing import *
 
 app = FastAPI()
 
-# การตั้งค่า CORS Middleware
+#การตั้งค่า CORS Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # คุณสามารถระบุโดเมนที่อนุญาตเฉพาะที่นี่
